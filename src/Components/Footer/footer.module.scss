@@ -1,0 +1,117 @@
+footer {
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 7px;
+  background-color: #f6d93d;
+  height: 13vh;
+  border-top: solid 1px rgba(0, 0, 0, 0.552);
+  max-width: 100%;
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 9vw;
+  }
+  
+  nav img {
+    width: 50px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
+  }
+  
+  p {
+    color: #23023c;
+    text-align: center;
+  }
+}
+
+.homeEspelho {
+  width: 80px;
+  cursor: pointer;
+}
+
+/* Media Queries para Responsividade */
+
+/* Para telas pequenas (celulares) */
+@media (max-width: 480px) {
+  footer {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+  }
+
+  footer nav {
+    width: 100%; /* Para que o menu ocupe a largura total */
+    justify-content: center; /* Centraliza os itens no nav */
+  }
+
+  footer section p {
+    font-size: 14px; /* Reduz o tamanho da fonte para se ajustar melhor em telas pequenas */
+  }
+
+  footer nav img {
+    width: 40px;
+    height: 30px; /* Ajusta o tamanho das imagens */
+  }
+
+  .homeEspelho {
+    width: 60px; /* Ajusta o tamanho do ícone */
+  }
+}
+
+/* Para tablets e telas maiores que 480px e até 768px */
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  footer nav {
+    width: 100%; /* Alinha os itens do nav em telas menores */
+    justify-content: center;
+  }
+
+  footer nav img {
+    width: 45px;
+    height: 35px;
+  }
+
+  .homeEspelho {
+    width: 70px; /* Ajusta o tamanho do ícone */
+  }
+
+  footer section p {
+    font-size: 16px; /* Um tamanho de fonte confortável para tablets */
+  }
+}
+
+/* Para telas grandes (desktops e maiores que 768px) */
+@media (min-width: 769px) {
+  footer {
+    flex-direction: row; /* Exibe os itens na horizontal */
+    height: 13vh;
+    padding: 7px;
+  }
+
+  footer nav {
+    width: 9vw;
+  }
+
+  footer nav img {
+    width: 50px;
+    height: 40px;
+  }
+
+  .homeEspelho {
+    width: 80px;
+  }
+
+  footer section p {
+    font-size: 18px; /* Tamanho de fonte adequado para telas grandes */
+  }
+}

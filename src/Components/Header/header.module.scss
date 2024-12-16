@@ -1,0 +1,338 @@
+.header {
+  display: flex;
+  background-color: #f6d93d;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.432);
+  border-bottom: solid 1px #00000078;
+}
+
+.homeSmile {
+  width: 100px;
+  transition: transform 0.6s ease-in-out;
+}
+
+.homeSmile:hover {
+  transform: rotate(360deg) scale(1.2);
+}
+
+.homeUhuuu {
+  width: 200px;
+}
+
+.formNavSelect {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 77%;
+
+  form {
+    display: flex;
+    align-items: center;
+  }
+
+  input {
+    width: 30vw;
+    height: 40px;
+    padding-left: 15px;
+    box-shadow: inset 0px 1px 5px #00000059;
+    border: none;
+    font-size: 1em;
+    outline: none;
+  }
+
+  input::placeholder {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  input:focus::placeholder {
+    opacity: 0;
+  }
+
+  input::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  button {
+    height: 40px;
+    width: 70px;
+    box-shadow: inset 0px 1px 5px #00000059;
+    border: none;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #f44336;
+  }
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20vw;
+    height: 40px;
+  }
+
+  .modais {
+    color: #23023c;
+    font-weight: bold;
+    text-shadow: 2px 1px 2px rgba(0, 0, 0, 0.576);
+    font-size: 1.3em;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: 0.3s ease;
+  }
+
+  .modais:hover {
+    background-color: #f44336;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  select { 
+    font-size: 14px;
+    padding: 8px 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    transition: 0.3s ease;
+    border: solid 2px #23023c;
+  }
+
+  select:hover {
+    border-color: #f44336;
+  }
+}
+
+.modalSobre {
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.sectionSobre {
+  display: flex;
+  flex-direction: column;
+  background-color: #fefae0;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  color: #18022a;
+
+  .buttonCloseSobre {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    
+    button {
+      background: none;
+      border: none;
+    }
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    border-radius: 10px;
+  }
+
+  img:hover {
+    width: 105px;
+    height: 105px;
+  }
+
+  .alunosContainer {
+    display: flex;
+    justify-content: space-between;
+
+    section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      align-items: center;
+      width: 200px;
+      border: solid #18022a;
+      margin: 10px;
+      border-radius: 10px;
+    }
+  }
+}
+
+.modalContatos {
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  section {
+    background-color: #fefae0;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: #18022a;
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    div {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    button {
+      background: none;
+      border: none;
+      justify-items: end;
+    }
+  }
+}
+
+.modalLogin {
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  section {
+    background-color: #fefae0;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: #18022a;
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    form div {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 80%;
+      height: 30px;
+      border-radius: 10px;
+      outline: none;
+      margin-left: 5px;
+      border: none;
+      padding-left: 10px;
+    }
+
+    input::placeholder {
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    input:focus::placeholder {
+      opacity: 0;
+    }
+
+    div {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    button {
+      background: none;
+      border: none;
+      justify-items: end;
+    }
+
+    form button {
+      padding: 10px 20px;
+      background-color: #23023c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: inset 0px 1px 5px #00000059;
+      margin-top: 15px;
+      transition: 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #f44336;
+    }
+  }
+}
+
+/* ESTILIZAÇÃO DA MENSAGEM DE BOAS VINDAS QUANDO LOGADO*/
+header .formNavSelect ul span button {
+  background-color: #23023cdd; /* Cor de fundo vermelha */
+  color: white;
+  border: none;
+  padding: 3px 6px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+header .formNavSelect ul span button:hover {
+  background-color: #f44336; 
+}
+
+/* Estilo para a mensagem de boas-vindas */
+.welcomeMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 25px;
+  text-shadow: 2px 1px 2px rgba(0, 0, 0, 0.576);
+  color: #23023c;
+}
+
+.welcome-message button {
+  background-color: #f44336; /* Cor de fundo para o botão "Sair" */
+  color: white;
+  transform: translateY(0px); /* Move o botão para cima */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Aumenta a sombra ao passar o mouse */
+
+  border: none;
+  padding: 5px 55px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 2px;
+}
+
+.welcome-message button:hover {
+  background-color: #c0392b; /* Cor de fundo quando o botão é hover */
+}
