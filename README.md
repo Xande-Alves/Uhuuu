@@ -1,8 +1,10 @@
-# React + Vite
+COMO NASCEU O PROJETO
+Projeto criado como requisito de aprovação no primeiro módulo do curso de Desenvolvimento de Sistemas na Escola Técnica Estadual Jurandir Bezerra Lins.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+IDEIA DE NEGÓCIO
+A idéia de negócio é criar uma plataforma que possa unir usuários a eventos e estabelecimentos de entretenimento e lazer.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+PRÓXIMOS PASSOS
+1 - Fazer a responsividade do site para ficar adaptado a todo tamanho de tela.
+2 - Fazer o link com banco de dados.
+3 - Construir as outras páginas e deixá-las funcionais.
