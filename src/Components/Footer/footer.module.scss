@@ -37,20 +37,21 @@ footer {
 /* Media Queries para Responsividade */
 
 /* Para telas pequenas (celulares) */
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   footer {
     flex-direction: column;
     height: auto;
     padding: 15px;
+
+    p {
+      font-size: 8px; /* Reduz o tamanho da fonte para se ajustar melhor em telas pequenas */
+    }
+
   }
 
   footer nav {
     width: 100%; /* Para que o menu ocupe a largura total */
     justify-content: center; /* Centraliza os itens no nav */
-  }
-
-  footer section p {
-    font-size: 14px; /* Reduz o tamanho da fonte para se ajustar melhor em telas pequenas */
   }
 
   footer nav img {

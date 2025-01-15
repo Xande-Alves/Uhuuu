@@ -12,7 +12,7 @@ export default function Home() {
       <Header />
       <div className={s.sideNavCaroussel}>
         <SideNavbar />
-        <main>
+        <main> 
           <h1>
             Nossa plataforma conecta você aos melhores estabelecimentos e
             eventos de entretenimento da cidade. De bares e restaurantes a

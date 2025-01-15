@@ -32,7 +32,7 @@ export default function Tabs() {
   };
 
   return (
-    <section className={s.tabsContainer}>
+    <section className={s.tabsContainer}> 
       <div className={s["tab-buttons"]}>
         <button
           className={`${s["tab-btn"]} ${

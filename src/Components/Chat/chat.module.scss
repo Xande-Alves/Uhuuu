@@ -51,7 +51,7 @@
 }
 
 .textoMaxw {
-  max-width: 20vw;
+  width: 20vw;
   text-align: left;
 }
 
@@ -64,7 +64,7 @@
 
   >p {
     display: flex;
-    max-width: 20vw;
+    width: 20vw;
     text-align: justify;
     margin-right: 10px;
     font-size: 0.9em;
@@ -107,6 +107,35 @@
 
 .sendButton:hover {
   background-color: #f44336b9;
+}
+
+//RESPONSIVIDADE
+@media (max-width: 500px) {
+  .boxChat {
+    width: 100%; 
+    
+    .mensagens {
+      width: 100%;
+      border: solid blue;
+  
+      >p {
+        width: 80%;
+        height: 100%;
+      }
+    }
+
+    .chatFormInputText {
+      width: 100%;
+
+      .chatInputText {
+        width: 80%;
+      }
+
+      .sendButton {
+        height: 8vh;
+      }
+    }
+  }
 }
 
 

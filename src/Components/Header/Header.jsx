@@ -8,7 +8,7 @@ import carlos from "../../assets/Carlos.jpg";
 import elton from "../../assets/Elton.jpeg";
 import yuri from '../../assets/yuri.jpeg';
 import gabriel from "../../assets/Gabriel.jpeg";
-import wesley from "../../assets/Wesley.jpg";
+import wesley from "../../assets/Wesley.jpg"; 
 
 // MODAL DE SOBRE
 function SobreModal({ isOpenC, closeModalC }) {
@@ -187,7 +187,7 @@ export default function Header() {
   return (
     <>
       <header className={s.header}>
-        <section>
+        <section className={s.headerLogos}>
           <Link to="/">
             <img
               src={smile}

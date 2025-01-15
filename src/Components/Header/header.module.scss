@@ -91,7 +91,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   }
 
-  select { 
+  select {  
     font-size: 14px;
     padding: 8px 8px;
     border: 1px solid #ddd;
@@ -335,4 +335,20 @@ header .formNavSelect ul span button:hover {
 
 .welcome-message button:hover {
   background-color: #c0392b; /* Cor de fundo quando o botão é hover */
+}
+
+// RESPONSIVIDADE
+@media (max-width: 500px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .formNavSelect {
+    width: 100%;
+    justify-content: space-between;
+    form {
+      display: none;
+    }
+  }
 }

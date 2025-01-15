@@ -111,4 +111,12 @@ body {
   #radio4:checked ~ .navigationAuto .autoBtn4 {
     background-color: white;
   }
+
+//RESPONSIVIDADE
+@media (max-width: 500px) {
+  .slider {
+    width: 100%;
+    height: auto;
+  }
+}
   

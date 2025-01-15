@@ -48,7 +48,7 @@ export default function Footer() {
           <img className={s.redes} src={Tiktok} alt="Tiktok" title="Tiktok" />
         </a>
       </nav>
-      <section>
+      <section> 
         <p>© 2024 Uhuuu!!! Todos os direitos reservados.</p>
       </section>
       <div className={s.espelho}>

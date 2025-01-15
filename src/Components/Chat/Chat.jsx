@@ -89,7 +89,7 @@ export default function Chat() {
     }
   };
 
-  return (
+  return ( 
     <section className={s.boxChat}>
       <div className={s.dizAi}>
         <h2>Diz aí!</h2>
