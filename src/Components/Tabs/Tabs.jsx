@@ -18,11 +18,57 @@ export default function Tabs() {
   const [countAMZ14, setCountAMZ14] = useState(68); // Armazém 14
   const [countSNW, setCountSNW] = useState(61); // Shopping North Way
 
-  const incrementCountBDG = () => setCountBDG(countBDG + 1);
-  const incrementCountFDT = () => setCountFDT(countFDT + 1);
-  const incrementCountBTK = () => setCountBTK(countBTK + 1);
-  const incrementCountAMZ14 = () => setCountAMZ14(countAMZ14 + 1);
-  const incrementCountSNW = () => setCountSNW(countSNW + 1);
+  const [euVouBDG, setEuVouBDG] = useState('Eu vou!')
+  const [euVouFDT, setEuVouFDT] = useState('Eu vou!')
+  const [euVouBTK, setEuVouBTK] = useState('Eu vou!')
+  const [euVouAMZ14, setEuVouAMZ14] = useState('Eu vou!')
+  const [euVouSNW, setEuVouSNW] = useState('Eu vou!')
+
+  const incrementCountBDG = () => {
+    if (euVouBDG=='Eu vou!') {
+      setCountBDG(countBDG + 1)
+      setEuVouBDG('Desistir')
+    } else {
+      setCountBDG(countBDG - 1)
+      setEuVouBDG('Eu vou!')
+    }
+  };
+  const incrementCountFDT = () => {
+    if (euVouFDT=='Eu vou!') {
+      setCountFDT(countFDT + 1)
+      setEuVouFDT('Desistir')
+    } else {
+      setCountFDT(countFDT - 1)
+      setEuVouFDT('Eu vou!')
+    }
+  }
+  const incrementCountBTK = () => {
+    if (euVouBTK=='Eu vou!') {
+      setCountBTK(countBTK + 1)
+      setEuVouBTK('Desistir')
+    } else {
+      setCountBTK(countBTK - 1)
+      setEuVouBTK('Eu vou!')
+    }
+  }
+  const incrementCountAMZ14 = () => {
+    if (euVouAMZ14=='Eu vou!') {
+      setCountAMZ14(countAMZ14 + 1)
+      setEuVouAMZ14('Desistir')
+    } else {
+      setCountAMZ14(countAMZ14 - 1)
+      setEuVouAMZ14('Eu vou!')
+    }
+  }  
+  const incrementCountSNW = () => {
+    if (euVouSNW=='Eu vou!') {
+      setCountSNW(countSNW + 1)
+      setEuVouSNW('Desistir')
+    } else {
+      setCountSNW(countSNW - 1)
+      setEuVouSNW('Eu vou!')
+    }
+  }  
 
   //SELECIONA TAB ATIVA
   const [activeTab, setActiveTab] = useState("future");
@@ -74,7 +120,7 @@ export default function Tabs() {
               <br />
               <span>Eu vou: {countBDG}</span>
               <button className={s["btn-euvou"]} onClick={incrementCountBDG}>
-                Eu vou!
+                {euVouBDG}
               </button>
             </div>
           </div>
@@ -98,7 +144,7 @@ export default function Tabs() {
               <br />
               <span>Eu vou: {countFDT}</span>
               <button className={s["btn-euvou"]} onClick={incrementCountFDT}>
-                Eu vou!
+                {euVouFDT}
               </button>
             </div>
           </div>
@@ -117,7 +163,7 @@ export default function Tabs() {
               <br />
               <span>Eu vou: {countBTK}</span>
               <button className={s["btn-euvou"]} onClick={incrementCountBTK}>
-                Eu vou!
+                {euVouBTK}
               </button>
             </div>
           </div>
@@ -136,7 +182,7 @@ export default function Tabs() {
               <br />
               <span>Eu vou: {countAMZ14}</span>
               <button className={s["btn-euvou"]} onClick={incrementCountAMZ14}>
-                Eu vou!
+                {euVouAMZ14}
               </button>
             </div>
           </div>
@@ -155,7 +201,7 @@ export default function Tabs() {
               <br />
               <span>Eu vou: {countSNW}</span>
               <button className={s["btn-euvou"]} onClick={incrementCountSNW}>
-                Eu vou!
+                {euVouSNW}
               </button>
             </div>
           </div>
