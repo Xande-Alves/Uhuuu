@@ -9,6 +9,7 @@ import elton from "../../assets/Elton.jpeg";
 import yuri from '../../assets/yuri.jpeg';
 import gabriel from "../../assets/Gabriel.jpeg";
 import wesley from "../../assets/Wesley.jpg"; 
+import { Value } from "sass";
 
 // MODAL DE SOBRE
 function SobreModal({ isOpenC, closeModalC }) {
@@ -135,8 +136,6 @@ export default function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false); // Novo estado para o modal de contato
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [selectedPage, setSelectedPage] = useState(""); // Estado para a cidade selecionada
-  const navigate = useNavigate(); // Hook para navegação
 
   const openLoginModal = () => {
     setIsLoginModalOpen(true); // Abre o modal de login
@@ -178,11 +177,15 @@ export default function Header() {
   };
 
   //FUNÇÃO DE TROCA DE CIDADES
+  const navigate = useNavigate(); // Hook para navegação
+  const [selectedPage, setSelectedPage] = useState(""); // Estado para a cidade selecionada
+
   const handleSelectChange = (event) => {
-    const value = event.target.value;
-    setSelectedPage(value);
-    navigate(value); // Navega para o valor selecionado
+    const valueC = event.target.value;
+    setSelectedPage(valueC);
+    navigate(valueC); // Navega para o valor selecionado
   };
+
 
   return (
     <>
@@ -190,7 +193,7 @@ export default function Header() {
         <section className={s.headerLogos}>
           <Link to="/">
             <img
-              src={smile}
+              src={smile} 
               className={s.homeSmile}
               alt="Logo do Uhuuu, emoji de óculos sorrindo"
             />

@@ -111,175 +111,182 @@ export default function Recife() {
     <>
       <Header />
       <h1 className={s.h1Recife}>RECIFE - PE</h1>
-      <div className={s.sideNavTabs}>
-        <SideNavbar />
-        <section className={s.tabsContainer}>
-          <div className={s["tab-buttons"]}>
-            <button
-              className={`${s["tab-btn"]} ${
-                activeTab === "future" ? s.active : ""
-              }`}
-              onClick={() => handleTabClick("future")}
-            >
-              O que vai bombar?
-            </button>
-            <button
-              className={`${s["tab-btn"]} ${
-                activeTab === "past" ? s.active : ""
-              }`}
-              onClick={() => handleTabClick("past")}
-            >
-              O que já bombou?
-            </button>
+      <div className={s.recifeContainer}>
+        <div className={s.sideNavTabs}>
+          <SideNavbar />
+          <section className={s.tabsContainer}>
+            <div className={s["tab-buttons"]}>
+              <button
+                className={`${s["tab-btn"]} ${
+                  activeTab === "future" ? s.active : ""
+                }`}
+                onClick={() => handleTabClick("future")}
+              >
+                O que vai bombar?
+              </button>
+              <button
+                className={`${s["tab-btn"]} ${
+                  activeTab === "past" ? s.active : ""
+                }`}
+                onClick={() => handleTabClick("past")}
+              >
+                O que já bombou?
+              </button>
+            </div>
+
+            <div className={s["tab-contents"]}>
+              {/* EVENTOS FUTUROS */}
+              <div
+                className={`${s.content} ${
+                  activeTab === "future" ? s.show : ""
+                }`}
+                id="future"
+              >
+                <div className={s.ranking} id="bardogera">
+                  <img src={barGera} alt="Roda de Samba no Bar do Gera" />
+                  <div>
+                    <h2>
+                      Samba no Bar do Gera: A Festa que Você Não Pode Perder!
+                    </h2>
+                    <p>
+                      Prepare-se para uma noite inesquecível de samba, alegria e
+                      descontração! Venha celebrar com a gente na nossa
+                      tradicional roda de samba!
+                    </p>
+                    <p>
+                      Traga seus amigos e venha viver a verdadeira essência do
+                      samba! Vamos fazer história juntos! Confirme sua presença
+                      e venha sambar com a gente!
+                    </p>
+                    <span>Cidade: Recife</span>
+                    <br />
+                    <span>Eu vou: {countBDG}</span>
+                    <button
+                      className={s["btn-euvou"]}
+                      onClick={incrementCountBDG}
+                    >
+                      Eu vou!
+                    </button>
+                  </div>
+                </div>
+
+                <div className={s.ranking} id="armazem14">
+                  <img src={angra} alt="Armazém 14" />
+                  <div>
+                    <h2>
+                      Show Imperdível de Metal no Armazém 14 com a Banda Angra!
+                    </h2>
+                    <p>Prepare-se para uma noite épica de heavy metal!</p>
+                    <p>
+                      Não perca a chance de ver Angra de perto! Traga sua galera
+                      e prepare-se para bater cabeça a noite toda! Garanta seu
+                      ingresso agora e venha fazer parte desse momento
+                      histórico!
+                    </p>
+                    <span>Cidade: Recife</span>
+                    <br />
+                    <span>Eu vou: {countAMZ14}</span>
+                    <button
+                      className={s["btn-euvou"]}
+                      onClick={incrementCountAMZ14}
+                    >
+                      Eu vou!
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* EVENTOS PASSADO */}
+              <div
+                className={`${s.content} ${activeTab === "past" ? s.show : ""}`}
+                id="past"
+              >
+                <div className={s.ranking} id="sambaRecife">
+                  <img src={sambaRecife} alt="Samba Recife" />
+                  <div>
+                    <h2>Samba Recife: Um Espetáculo de Sucesso do Samba</h2>
+                    <p>
+                      No último fim de semana, o Centro de Convenções do Recife
+                      se transformou em um verdadeiro palco de celebração com o
+                      evento Samba Recife! Foi uma noite repleta de ritmo,
+                      alegria e muita animação, unindo apaixonados pelo samba em
+                      uma festa inesquecível.
+                    </p>
+                    <p>
+                      Obrigado a todos que compareceram! Vocês fizeram desse
+                      evento uma experiência incrível, com apresentações de
+                      artistas talentosos que contagiaram a todos com sua
+                      energia! Reviva os melhores momentos! Fique ligado! Em
+                      breve, teremos mais eventos para continuar a celebração da
+                      nossa rica cultura. Junte-se a nós e mantenha o samba
+                      vivo!
+                    </p>
+                    <span>Cidade: Recife</span>
+                    <br />
+                    <span>Eu fui: 568</span>
+                  </div>
+                </div>
+
+                <div className={s.ranking} id="seresta">
+                  <img src={seresta} alt="Seresta dos Amigos" />
+                  <div>
+                    <h2>Sucesso Total na Seresta do Marco Zero!</h2>
+                    <p>
+                      No coração do Recife, a magia da música tomou conta do
+                      Marco Zero! A seresta foi um verdadeiro espetáculo,
+                      reunindo centenas de amantes da boa música e da cultura
+                      pernambucana.
+                    </p>
+                    <p>
+                      Agradecemos a todos que participaram! Com canções que
+                      embalaram corações e sorrisos que iluminaram a noite, o
+                      evento foi um sucesso absoluto! Não perca a próxima! Fique
+                      ligado para mais eventos incríveis. Juntos, fazemos a
+                      cultura brilhar ainda mais!
+                    </p>
+                    <span>Cidade: Recife</span>
+                    <br />
+                    <span>Eu fui: 368</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <section className={s.boxChat}>
+          <div className={s.dizAi}>
+            <h2>Diz aí!</h2>
           </div>
-
-          <div className={s["tab-contents"]}>
-            {/* EVENTOS FUTUROS */}
-            <div
-              className={`${s.content} ${activeTab === "future" ? s.show : ""}`}
-              id="future"
-            >
-              <div className={s.ranking} id="bardogera">
-                <img src={barGera} alt="Roda de Samba no Bar do Gera" />
-                <div>
-                  <h2>
-                    Samba no Bar do Gera: A Festa que Você Não Pode Perder!
-                  </h2>
-                  <p>
-                    Prepare-se para uma noite inesquecível de samba, alegria e
-                    descontração! Venha celebrar com a gente na nossa
-                    tradicional roda de samba!
-                  </p>
-                  <p>
-                    Traga seus amigos e venha viver a verdadeira essência do
-                    samba! Vamos fazer história juntos! Confirme sua presença e
-                    venha sambar com a gente!
-                  </p>
-                  <span>Cidade: Recife</span>
-                  <br />
-                  <span>Eu vou: {countBDG}</span>
-                  <button
-                    className={s["btn-euvou"]}
-                    onClick={incrementCountBDG}
-                  >
-                    Eu vou!
-                  </button>
+          <div className={s.caixaMensagens}>
+            {messages.map((msg, index) => (
+              <div className={s.mensagens} key={index}>
+                <div className={s.perfil}>
+                  <img src={msg.img} alt="Foto de perfil de usuário" />
+                  <p>{msg.user}</p>
                 </div>
+                <p className={s.textoMaxw}>{msg.text}</p>
               </div>
-
-              <div className={s.ranking} id="armazem14">
-                <img src={angra} alt="Armazém 14" />
-                <div>
-                  <h2>
-                    Show Imperdível de Metal no Armazém 14 com a Banda Angra!
-                  </h2>
-                  <p>Prepare-se para uma noite épica de heavy metal!</p>
-                  <p>
-                    Não perca a chance de ver Angra de perto! Traga sua galera e
-                    prepare-se para bater cabeça a noite toda! Garanta seu
-                    ingresso agora e venha fazer parte desse momento histórico!
-                  </p>
-                  <span>Cidade: Recife</span>
-                  <br />
-                  <span>Eu vou: {countAMZ14}</span>
-                  <button
-                    className={s["btn-euvou"]}
-                    onClick={incrementCountAMZ14}
-                  >
-                    Eu vou!
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* EVENTOS PASSADO */}
-            <div
-              className={`${s.content} ${activeTab === "past" ? s.show : ""}`}
-              id="past"
-            >
-              <div className={s.ranking} id="sambaRecife">
-                <img src={sambaRecife} alt="Samba Recife" />
-                <div>
-                  <h2>Samba Recife: Um Espetáculo de Sucesso do Samba</h2>
-                  <p>
-                    No último fim de semana, o Centro de Convenções do Recife se
-                    transformou em um verdadeiro palco de celebração com o
-                    evento Samba Recife! Foi uma noite repleta de ritmo, alegria
-                    e muita animação, unindo apaixonados pelo samba em uma festa
-                    inesquecível.
-                  </p>
-                  <p>
-                    Obrigado a todos que compareceram! Vocês fizeram desse
-                    evento uma experiência incrível, com apresentações de
-                    artistas talentosos que contagiaram a todos com sua energia!
-                    Reviva os melhores momentos! Fique ligado! Em breve, teremos
-                    mais eventos para continuar a celebração da nossa rica
-                    cultura. Junte-se a nós e mantenha o samba vivo!
-                  </p>
-                  <span>Cidade: Recife</span>
-                  <br />
-                  <span>Eu fui: 568</span>
-                </div>
-              </div>
-
-              <div className={s.ranking} id="seresta">
-                <img src={seresta} alt="Seresta dos Amigos" />
-                <div>
-                  <h2>Sucesso Total na Seresta do Marco Zero!</h2>
-                  <p>
-                    No coração do Recife, a magia da música tomou conta do Marco
-                    Zero! A seresta foi um verdadeiro espetáculo, reunindo
-                    centenas de amantes da boa música e da cultura pernambucana.
-                  </p>
-                  <p>
-                    Agradecemos a todos que participaram! Com canções que
-                    embalaram corações e sorrisos que iluminaram a noite, o
-                    evento foi um sucesso absoluto! Não perca a próxima! Fique
-                    ligado para mais eventos incríveis. Juntos, fazemos a
-                    cultura brilhar ainda mais!
-                  </p>
-                  <span>Cidade: Recife</span>
-                  <br />
-                  <span>Eu fui: 368</span>
-                </div>
-              </div>
-            </div>
+            ))}
+          </div>
+          <div>
+            <form className={s.chatFormInputText} onSubmit={handleSubmit}>
+              <textarea
+                className={s.chatInputText}
+                rows="4"
+                cols="50"
+                placeholder="Digite seu texto aqui..."
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown} // Captura a tecla "Enter"
+              ></textarea>
+              <button type="submit" className={s.sendButton} title="Enviar">
+                ⮚
+              </button>
+            </form>
           </div>
         </section>
+        <Footer />
       </div>
-      <section className={s.boxChat}>
-        <div className={s.dizAi}>
-          <h2>Diz aí!</h2>
-        </div>
-        <div className={s.caixaMensagens}>
-          {messages.map((msg, index) => (
-            <div className={s.mensagens} key={index}>
-              <div className={s.perfil}>
-                <img src={msg.img} alt="Foto de perfil de usuário" />
-                <p>{msg.user}</p>
-              </div>
-              <p className={s.textoMaxw}>{msg.text}</p>
-            </div>
-          ))}
-        </div>
-        <div>
-          <form className={s.chatFormInputText} onSubmit={handleSubmit}>
-            <textarea
-              className={s.chatInputText}
-              rows="4"
-              cols="50"
-              placeholder="Digite seu texto aqui..."
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={handleKeyDown} // Captura a tecla "Enter"
-            ></textarea>
-            <button type="submit" className={s.sendButton} title="Enviar">
-              ⮚
-            </button>
-          </form>
-        </div>
-      </section>
-      <Footer />
     </>
   );
 }
