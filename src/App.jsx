@@ -9,6 +9,7 @@ import BuscaCompleta from './Pages/BuscaCompleta/BuscaCompleta';
 import PertoDeVoce from './Pages/PertoDeVoce/PertoDeVoce';
 import PorCategorias from './Pages/PorCategorias/PorCategorias';
 import SeusRoles from './Pages/SeusRoles/SeusRoles';
+import Cadastro from './Pages/Cadastro/Cadastro';
 
 export default function App() {
 
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="PertoDeVoce" element={<PertoDeVoce />} />
           <Route path="PorCategorias" element={<PorCategorias />} />
           <Route path="SeusRoles" element={<SeusRoles />} />
+          <Route path='Cadastro' element={<Cadastro />} />
         </Routes>
       </BrowserRouter>
     

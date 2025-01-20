@@ -6,9 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 import alexandre from "../../assets/Alexandre.jpeg";
 import carlos from "../../assets/Carlos.jpg";
 import elton from "../../assets/Elton.jpeg";
-import yuri from '../../assets/yuri.jpeg';
+import yuri from "../../assets/yuri.jpeg";
 import gabriel from "../../assets/Gabriel.jpeg";
-import wesley from "../../assets/Wesley.jpg"; 
+import wesley from "../../assets/Wesley.jpg";
 import { Value } from "sass";
 
 // MODAL DE SOBRE
@@ -21,44 +21,87 @@ function SobreModal({ isOpenC, closeModalC }) {
         <div className={s.buttonCloseSobre}>
           <button onClick={closeModalC}>❌</button>
         </div>
-        <div>
-          <h2>Sobre</h2>
-          <p>Grupo de alunos idealizadores do Uhuuu!</p>
-        </div>
-        <div className={s.alunosContainer}>
-          <div>
-            <section>
-              <img src={alexandre} alt="Foto Alexandre Alves" />
-              <p>Alexandre Alves</p>
-            </section>
-            <section>
-              <img src={carlos} alt="Foto Carlos Jansen" />
-              <p>Carlos Jansen</p>
-            </section>
-            <section>
-              <img src={elton} alt="Foto Elton Melo" />
-              <p>Elton Melo</p>
-            </section>
-          </div>
-          <div>
-            <section>
-              <img src={gabriel} alt="Foto Gabriel Francisco" />
-              <p>Gabriel Francisco</p>
-            </section>
-            <section>
-              <img src={wesley} alt="Foto Wesley Paredes" />
-              <p>Wesley Paredes</p>
-            </section>
-            <section>
-              <img src={yuri} alt="Foto Yuri D'Albuquerque" />
-              <p>Yuri D'Albuquerque</p>
-            </section>
-          </div>
-        </div>
+        <section>
+          <h1>Sobre o Uhuuu!!!</h1>
+          <p>
+            O Uhuuu!!! nasceu como um projeto desenvolvido para apresentação no
+            primeiro módulo do curso técnico de Desenvolvimento de Sistemas da
+            Escola Técnica Estadual Jurandir Bezerra Lins. Desde então, evoluiu
+            para um projeto pessoal, com o objetivo de conectar pessoas a
+            experiências únicas de entretenimento e lazer.
+          </p>
+          <p>
+            A plataforma tem como propósito unir usuários a estabelecimentos e
+            eventos variados, atendendo a diferentes preferências e estilos. De
+            baladas e shows a exposições, passeios ecológicos e até eventos
+            religiosos, o Uhuuu!!! oferece algo para todos, tornando-se uma
+            ferramenta indispensável para qualquer tipo de usuário.
+          </p>
+          <p>
+            Quando um organizador cadastra seu evento na plataforma, ele se
+            torna acessível para pesquisa pelos usuários cadastrados. Essa
+            dinâmica beneficia ambas as partes: os usuários ganham acesso a um
+            catálogo diversificado para enriquecer seus momentos de lazer,
+            enquanto os organizadores aumentam as chances de sucesso de seus
+            eventos.
+          </p>
+          <p>
+            Junte-se a nós e descubra todas as possibilidades que o Uhuuu!!! tem
+            a oferecer. Viva momentos inesquecíveis com a nossa plataforma!
+          </p>
+        </section>
       </section>
     </div>
   );
 }
+
+// function SobreModal({ isOpenC, closeModalC }) {
+//   if (!isOpenC) return null; // Não renderiza o modal se isOpen for falso
+
+//   return (
+//     <div className={s.modalSobre}>
+//       <section className={s.sectionSobre}>
+//         <div className={s.buttonCloseSobre}>
+//           <button onClick={closeModalC}>❌</button>
+//         </div>
+//         <div>
+//           <h2>Sobre</h2>
+//           <p>Grupo de alunos idealizadores do Uhuuu!</p>
+//         </div>
+//         <div className={s.alunosContainer}>
+//           <div>
+//             <section>
+//               <img src={alexandre} alt="Foto Alexandre Alves" />
+//               <p>Alexandre Alves</p>
+//             </section>
+//             <section>
+//               <img src={carlos} alt="Foto Carlos Jansen" />
+//               <p>Carlos Jansen</p>
+//             </section>
+//             <section>
+//               <img src={elton} alt="Foto Elton Melo" />
+//               <p>Elton Melo</p>
+//             </section>
+//           </div>
+//           <div>
+//             <section>
+//               <img src={gabriel} alt="Foto Gabriel Francisco" />
+//               <p>Gabriel Francisco</p>
+//             </section>
+//             <section>
+//               <img src={wesley} alt="Foto Wesley Paredes" />
+//               <p>Wesley Paredes</p>
+//             </section>
+//             <section>
+//               <img src={yuri} alt="Foto Yuri D'Albuquerque" />
+//               <p>Yuri D'Albuquerque</p>
+//             </section>
+//           </div>
+//         </div>
+//       </section>
+//     </div>
+//   );
+// }
 
 // MODAL DE CONTATOS
 function ContactModal({ isOpenC, closeModalC }) {
@@ -125,7 +168,11 @@ function LoginModal({ isOpen, closeModal, onLogin }) {
           </div>
           <button type="submit">Entrar</button>
         </form>
+        <div className={s.cadastrar}>
+          <Link to='/Cadastro'>Ainda não sou cadastrado.</Link>
+        </div>
       </section>
+      
     </div>
   );
 }
@@ -186,14 +233,13 @@ export default function Header() {
     navigate(valueC); // Navega para o valor selecionado
   };
 
-
   return (
     <>
       <header className={s.header}>
         <section className={s.headerLogos}>
           <Link to="/">
             <img
-              src={smile} 
+              src={smile}
               className={s.homeSmile}
               alt="Logo do Uhuuu, emoji de óculos sorrindo"
             />
@@ -203,17 +249,29 @@ export default function Header() {
         <section className={s.formNavSelect}>
           <form action="#" onSubmit={handleSearch}>
             <input type="search" name="" id="" placeholder="Buscar" />
-            <Link to='PesquisaGeral'><button>🔎</button></Link>
+            <Link to="PesquisaGeral">
+              <button>🔎</button>
+            </Link>
           </form>
           <nav>
             <ul>
               <li>
-                <a className={s.modais} href="#" title="Sobre" onClick={openSobreModal}>
+                <a
+                  className={s.modais}
+                  href="#"
+                  title="Sobre"
+                  onClick={openSobreModal}
+                >
                   Sobre
                 </a>
               </li>
               <li>
-                <a className={s.modais} href="#" title="Contato" onClick={openContactModal}>
+                <a
+                  className={s.modais}
+                  href="#"
+                  title="Contato"
+                  onClick={openContactModal}
+                >
                   Contato
                 </a>
               </li>
@@ -224,14 +282,19 @@ export default function Header() {
                     <button onClick={handleLogout}>Sair</button>
                   </span>
                 ) : (
-                  <a className={s.modais} href="#" title="Login" onClick={openLoginModal}>
+                  <a
+                    className={s.modais}
+                    href="#"
+                    title="Login"
+                    onClick={openLoginModal}
+                  >
                     Login
                   </a>
                 )}
               </li>
             </ul>
           </nav>
-          <select value={selectedPage} onChange={handleSelectChange}>
+          <select value="" onChange={handleSelectChange}>
             <option value="" disabled>
               Cidades
             </option>
