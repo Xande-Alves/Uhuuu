@@ -82,6 +82,13 @@
 
             .inputNumero {
               width: 50%;
+              -moz-appearance: textfield; /* Remove setinhas no Firefox */
+  
+              &::-webkit-inner-spin-button,
+              &::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
             }
           }
         }
@@ -139,7 +146,87 @@
 
     label {
       font-size: .8em;
-      width: 20%;
     }
+
+    .divConfirmaSenha {
+      input {
+        width: 100%;
+      }
+    }
+
+    .labelLogradouro {
+      margin-right: 23px;
+    }
+
+    .endereco {
+      width: 100%;
+
+      .labelEndereco {
+        display: none;
+      }
+
+      .dadosEndereco {
+        width: 100%;
+
+        .rua {
+          width: 100% !important; // Garante que ocupe tudo
+        }
+
+        .numeroComplemento {
+          width: 100% !important;
+
+          .divNumero {
+            input {
+              padding-left: 2px;
+              padding-right: 2px;
+              text-align: center;
+            }
+          }
+
+          .divComplemento {
+            label {
+              margin-right: 10px;
+            }
+          }
+        }
+
+        .bairroCidadeEstado {
+          width: 100% !important;
+          margin: 0;
+
+          .divBairro {
+            //margin: 0;
+
+            input {
+              padding-left: 2px;
+              padding-right: 2px;
+              text-align: center;
+            }
+          }
+
+          .divCidade {
+            //margin: 0;
+
+            input {
+              padding-left: 2px;
+              padding-right: 2px;
+              text-align: center;
+            }
+          }
+
+          .divEstado {
+            //margin: 0;
+
+            input {
+              padding-left: 2px;
+              padding-right: 2px;
+              text-align: center;
+            }
+          }
+        }
+      }
+
+    }
+    
   }
 }
