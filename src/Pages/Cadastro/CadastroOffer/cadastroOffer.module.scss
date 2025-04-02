@@ -1,6 +1,6 @@
 .cadastroContent {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .cadastro {
@@ -23,7 +23,7 @@
     width: 100%;
     color: #18022a;
 
-    
+
 
     div {
       width: 100%;
@@ -44,7 +44,7 @@
         opacity: 1;
         transition: opacity 0.3s ease;
       }
-  
+
       input:focus::placeholder {
         opacity: 0;
       }
@@ -82,8 +82,9 @@
 
             .inputNumero {
               width: 50%;
-              -moz-appearance: textfield; /* Remove setinhas no Firefox */
-  
+              -moz-appearance: textfield;
+              /* Remove setinhas no Firefox */
+
               &::-webkit-inner-spin-button,
               &::-webkit-outer-spin-button {
                 -webkit-appearance: none;
@@ -113,7 +114,7 @@
         }
       }
     }
-    
+
     button {
       padding: 10px 20px;
       background-color: #23023c;
@@ -131,10 +132,10 @@
     }
 
     .cadastroDivButtom {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
@@ -227,6 +228,6 @@
       }
 
     }
-    
+
   }
 }
