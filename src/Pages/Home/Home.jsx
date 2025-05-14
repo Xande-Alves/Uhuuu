@@ -1,18 +1,15 @@
 import Caroussel from "../../Components/Caroussel/Caroussel";
 import Chat from "../../Components/Chat/Chat";
-import Footer from "../../Components/Footer/Footer";
-import Header from "../../Components/Header/Header";
 import SideNavbar from "../../Components/SideNavbar/SideNavbar";
 import Tabs from "../../Components/Tabs/Tabs";
 import s from "./home.module.scss";
 
 export default function Home() {
-  return ( 
+  return (
     <>
-      <Header />
       <div className={s.sideNavCaroussel}>
         <SideNavbar />
-        <main> 
+        <main>
           <h1>
             Nossa plataforma conecta você aos melhores estabelecimentos e
             eventos de entretenimento da cidade. De bares e restaurantes a
@@ -25,10 +22,9 @@ export default function Home() {
         </main>
       </div>
       <div className={s.chatTabs}>
-          <Chat />
-          <Tabs />
+        <Chat />
+        <Tabs />
       </div>
-      <Footer />
     </>
   );
 }

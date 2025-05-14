@@ -1,5 +1,5 @@
 import s from "./header.module.scss";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import smile from "../../assets/Home.png";
 import uhuuu from "../../assets/Logo12.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,14 +10,22 @@ import yuri from "../../assets/yuri.jpeg";
 import gabriel from "../../assets/Gabriel.jpeg";
 import wesley from "../../assets/Wesley.jpg";
 import { Value } from "sass";
+import axios from "axios";
 
-export default function Header() {
+export default function Header({ loggedUser, setLoggedUser }) {
   //LÓGICA DO MODAL
   const [isSobreModalOpen, setIsSobreModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false); // Novo estado para o modal de contato
   const [isTipoLoginModalOpen, setIsTipoLoginModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [nomeBotaoLogin, setNomeBotaoLogin] = useState("Login");
+
+  useEffect(() => {
+    if (loggedUser === null) {
+      setNomeBotaoLogin("Login");
+    }
+  }, [loggedUser]);
 
   const openLoginModal = () => {
     setIsLoginModalOpen(true); // Abre o modal de login
@@ -52,12 +60,16 @@ export default function Header() {
     setIsTipoLoginModalOpen(false); // Fecha o modal de tipo login
   };
 
-  const handleLogin = () => {
+  const handleLogin = (user) => {
     setIsAuthenticated(true); // Usuário autenticado
+    setLoggedUser(user); // <- salva o usuário autenticado
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false); // Usuário deslogado
+    setLoggedUser(null); // limpa o user ao sair
+    setNomeBotaoLogin("Login");
+    navigate("/");
   };
 
   // MODAL DE SOBRE
@@ -164,7 +176,11 @@ export default function Header() {
             <button onClick={closeModalC}>❌</button>
           </div>
           <div className={s.tiposLogin}>
-            <Link to="/CadastroSeacher" className={s.linkSemEstilo}>
+            <Link
+              to="/CadastroSeacher"
+              className={s.linkSemEstilo}
+              onClick={closeTipoLoginModal}
+            >
               <div className={s.buscadores}>
                 <h2>Buscadores</h2>
                 <p>
@@ -173,7 +189,11 @@ export default function Header() {
                 </p>
               </div>
             </Link>
-            <Link to="/CadastroOffer" className={s.linkSemEstilo}>
+            <Link
+              to="/CadastroOffer"
+              className={s.linkSemEstilo}
+              onClick={closeTipoLoginModal}
+            >
               <div className={s.ofertadores}>
                 <h2>Ofertadores</h2>
                 <p>
@@ -216,13 +236,75 @@ export default function Header() {
 
   //MODAL DE LOGIN
   function LoginModal({ isOpen, closeModal, onLogin }) {
-    if (!isOpen) return null; // Não renderiza o modal se isOpen for falso
+    //BUSCA (GET) DOS CADASTRADOS PARA VERIFICAR AUTENTICIDADE
+    const [seachers, setSeachers] = useState([]);
+    const [offers, setOffers] = useState([]);
 
-    const handleLogin = (event) => {
+    useEffect(() => {
+      const fetchSeachers = async () => {
+        try {
+          const response = await axios.get(
+            "https://api-uhuuu.onrender.com/cadastrados_seachers"
+          );
+          setSeachers(response.data);
+        } catch (error) {
+          console.error("Erro ao buscar usuários cadastrados:", error);
+        }
+      };
+
+      fetchSeachers();
+    }, []);
+
+    useEffect(() => {
+      const fetchOffers = async () => {
+        try {
+          const response = await axios.get(
+            "https://api-uhuuu.onrender.com/cadastrados_offers"
+          );
+          setOffers(response.data);
+        } catch (error) {
+          console.error("Erro ao buscar usuários cadastrados:", error);
+        }
+      };
+
+      fetchOffers();
+    }, []);
+
+    //CAPTURA DE DADOS DE USUÁRIO E SENHA NO MODAL LOGIN
+    const [usuario, setUsuario] = useState("");
+    const [senha, setSenha] = useState("");
+
+    const capturaUsuario = (e) => {
+      setUsuario(e.target.value);
+    };
+    const capturaSenha = (e) => {
+      setSenha(e.target.value);
+    };
+
+    //AUTENTICAÇÃO DO LOGIN
+    if (!isOpen) return null; // Não renderiza o modal se isOpen for falso
+    const processLogin = (event) => {
       event.preventDefault();
-      // Aqui você pode adicionar a lógica de autenticação (verificação de usuário e senha)
-      onLogin(); // Ao fazer login, chamamos o onLogin que vai mudar o estado de autenticado
-      closeModal(); // Fecha o modal após o login
+
+      const userSeacher = seachers.find(
+        (user) => user.email === usuario && user.senha === senha
+      );
+
+      const userOffer = offers.find(
+        (user) => user.email === usuario && user.senha === senha
+      );
+
+      const user = userSeacher || userOffer;
+
+      if (user) {
+        onLogin(user); // Envie o objeto do usuário autenticado
+        closeModal();
+        setNomeBotaoLogin("Perfil");
+      } else {
+        alert(
+          "Dados incorretos ou usuário não possui cadastro no sistema. Verifique os dados ou efetue o cadastro."
+        );
+      }
     };
 
     return (
@@ -232,13 +314,14 @@ export default function Header() {
             <button onClick={closeModal}>❌</button>
           </div>
           <h2>Login</h2>
-          <form onSubmit={handleLogin}>
+          <form>
             <div>
               <label htmlFor="username">Usuário</label>
               <input
                 type="text"
                 id="username"
                 placeholder="Digite seu usuário"
+                onChange={capturaUsuario}
                 required
               />
             </div>
@@ -248,10 +331,13 @@ export default function Header() {
                 type="password"
                 id="password"
                 placeholder="  Digite sua senha"
+                onChange={capturaSenha}
                 required
               />
             </div>
-            <button type="submit">Entrar</button>
+            <button type="submit" onClick={processLogin}>
+              Entrar
+            </button>
           </form>
           <div className={s.cadastrar}>
             <a onClick={openTipoLoginModal}>Ainda não sou cadastrado.</a>
@@ -321,21 +407,23 @@ export default function Header() {
                 </a>
               </li>
               <li>
-                {isAuthenticated ? (
-                  <span className={s.welcomeMessage}>
-                    Bem-Vindo <div>😁</div>
-                    <button onClick={handleLogout}>Sair</button>
-                  </span>
-                ) : (
-                  <a
-                    className={s.modais}
-                    href="#"
-                    title="Login"
-                    onClick={openLoginModal}
-                  >
-                    Login
-                  </a>
-                )}
+                <a
+                  className={s.modais}
+                  href="#"
+                  title="Login"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (nomeBotaoLogin === "Login") {
+                      openLoginModal();
+                    } else if (loggedUser.sobrenome) {
+                      navigate("/PerfilSeacher");
+                    } else {
+                      navigate("/PerfilOffer");
+                    }
+                  }}
+                >
+                  {nomeBotaoLogin}
+                </a>
               </li>
             </ul>
           </nav>
@@ -349,6 +437,14 @@ export default function Header() {
           </select>
         </section>
       </header>
+      <div>
+        {isAuthenticated && loggedUser && (
+          <div className={s.welcomeMessage}>
+            <p>Bem-vindo {loggedUser.nome}!</p>
+            <button onClick={handleLogout}>Sair</button>
+          </div>
+        )}
+      </div>
 
       {/* Modal de sobre */}
       <SobreModal isOpenC={isSobreModalOpen} closeModalC={closeSobreModal} />

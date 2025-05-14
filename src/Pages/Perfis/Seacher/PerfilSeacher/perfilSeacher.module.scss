@@ -22,6 +22,9 @@
   form {
     width: 100%;
     color: #18022a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     div {
       width: 100%;
@@ -61,14 +64,22 @@
     }
 
     button:hover {
-      background-color: #f44336;
+      background-color: #4c0581;
     }
 
     .cadastroDivButtom {
-        width: 100%;
+        width: 70%;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
+
+        .botaoDelete {
+          background-color: #f44336;
+        }
+
+        .botaoDelete:hover {
+          background-color: #912821;
+        }
     }
   }
 }

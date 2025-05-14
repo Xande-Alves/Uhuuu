@@ -1,9 +1,10 @@
-import s from "./cadastroOffer.module.scss";
-import { useState } from "react";
+import s from "./perfilOffer.module.scss";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function CadastroOffer() {
+export default function PerfilOffer({ loggedUser, setLoggedUser }) {
+  const [editando, setEditando] = useState(false);
   const navigate = useNavigate();
 
   const [nome, setNome] = useState("");
@@ -13,10 +14,24 @@ export default function CadastroOffer() {
   const [bairro, setBairro] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(loggedUser.email);
   const [telefone, setTelefone] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmaSenha, setConfirmaSenha] = useState("");
+
+  useEffect(() => {
+    if (loggedUser) {
+      setNome(loggedUser.nome || "");
+      setLogradouro(loggedUser.logradouro || "");
+      setNumero(loggedUser.numero || "");
+      setComplemento(loggedUser.complemento || "");
+      setBairro(loggedUser.bairro || "");
+      setCidade(loggedUser.cidade || "");
+      setEstado(loggedUser.estado || "");
+      setEmail(loggedUser.email || "");
+      setTelefone(loggedUser.telefone || "");
+    }
+  }, [loggedUser]);
 
   const capturaNome = (e) => {
     setNome(e.target.value);
@@ -38,9 +53,6 @@ export default function CadastroOffer() {
   };
   const capturaEstado = (e) => {
     setEstado(e.target.value);
-  };
-  const capturaEmail = (e) => {
-    setEmail(e.target.value);
   };
   const capturaTelefone = (e) => {
     const valorDigitado = e.target.value.replace(/\D/g, ""); // Remove não-dígitos
@@ -71,6 +83,21 @@ export default function CadastroOffer() {
 
   const enviarDados = async (e) => {
     e.preventDefault();
+    if (!editando) {
+      // Ativa modo edição, sem enviar nada
+      setEditando(true);
+      return;
+    }
+
+    //CERTIFICA A NÃO EXISTENCIA DE NUMEROS E CARACTERES ESPECIAIS NO NOME
+    for (const caractere of nome) {
+      if (!/[a-zA-Z]/.test(caractere)) {
+        alert(
+          "O campo nome não deve possuir números ou caracteres especiais. Por favor, tente novamente."
+        );
+        return;
+      }
+    }
 
     //VALIDA EMAIL PARA UM FORMATO VÁLIDO
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -97,43 +124,41 @@ export default function CadastroOffer() {
       return;
     }
 
-    const endPointAPI = "https://api-uhuuu.onrender.com/cadastrar_offer";
+    //LOGICA DO PUT AQUI
+  };
 
-    const dadosAEnviar = {
-      nome,
-      logradouro,
-      numero,
-      complemento,
-      bairro,
-      cidade,
-      estado,
-      email,
-      telefone,
-      senha,
-    };
+  //DELETAR CONTA
+  const deletarConta = async (e) => {
+    e.preventDefault();
+    if (editando) {
+      // Cancela a edição e atualização de dados
+      setEditando(false);
+      return;
+    }
+
+    const confirmacao = confirm(
+      "Tem certeza de que deseja deletar sua conta? Esta ação é irreversível!"
+    );
+
+    if (!confirmacao) {
+      return; // Usuário cancelou a exclusão
+    }
+
+    //LOGICA DO DELETE
+    const endPointAPI = "https://api-uhuuu.onrender.com/deletar_offer";
+
+    const dadosAEnviar = { email };
 
     try {
-      const resposta = await axios.post(endPointAPI, dadosAEnviar);
-      alert("Usuário ofertador cadastrado com sucesso!");
+      const resposta = await axios.delete(endPointAPI, {
+        data: dadosAEnviar,
+      });
+      alert("Conta deletada com sucesso!");
+      setLoggedUser(null);
       navigate("/");
-
-      // Limpa os campos após o envio bem-sucedido
-      // setNome("");
-      // setLogradouro("");
-      // setNumero("");
-      // setComplemento("");
-      // setBairro("");
-      // setCidade("");
-      // setEstado("");
-      // setEmail("");
-      // setTelefone("");
-      // setSenha("");
-      // setConfirmaSenha("");
     } catch (erro) {
-      console.error("Erro ao cadastrar usuário buscador:", erro);
-      alert(
-        "Erro ao cadastrar usuário ofertador. Verifique os dados e tente novamente."
-      );
+      console.error("Erro ao deletar usuário buscador:", erro);
+      alert("Erro ao deletar usuário buscador.");
     }
   };
 
@@ -141,7 +166,7 @@ export default function CadastroOffer() {
     <>
       <div className={s.cadastroContent}>
         <section className={s.cadastro}>
-          <h1>Cadastro de ofertadores</h1>
+          <h1>Dados do Perfil</h1>
           <form>
             <div>
               <label htmlFor="nome">Nome</label>
@@ -151,6 +176,7 @@ export default function CadastroOffer() {
                 placeholder="Digite seu primeiro nome"
                 value={nome}
                 onChange={capturaNome}
+                disabled={!editando}
                 required
               />
             </div>
@@ -171,6 +197,7 @@ export default function CadastroOffer() {
                       placeholder="Digite sua rua, avenida..."
                       value={logradouro}
                       onChange={capturaLogradouro}
+                      disabled={!editando}
                       required
                     />
                   </div>
@@ -184,6 +211,7 @@ export default function CadastroOffer() {
                       id="numero"
                       value={numero}
                       onChange={capturaNumero}
+                      disabled={!editando}
                       required
                     />
                   </div>
@@ -195,6 +223,7 @@ export default function CadastroOffer() {
                       placeholder="Complemento do endereço"
                       value={complemento}
                       onChange={capturaComplemento}
+                      disabled={!editando}
                     />
                   </div>
                 </div>
@@ -207,6 +236,7 @@ export default function CadastroOffer() {
                       placeholder="Digite seu bairro"
                       value={bairro}
                       onChange={capturaBairro}
+                      disabled={!editando}
                       required
                     />
                   </div>
@@ -218,6 +248,7 @@ export default function CadastroOffer() {
                       placeholder="Digite a cidade"
                       value={cidade}
                       onChange={capturaCidade}
+                      disabled={!editando}
                       required
                     />
                   </div>
@@ -228,22 +259,12 @@ export default function CadastroOffer() {
                       id="estado"
                       value={estado}
                       onChange={capturaEstado}
+                      disabled={!editando}
                       required
                     />
                   </div>
                 </div>
               </div>
-            </div>
-            <div>
-              <label htmlFor="email">E-mail</label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Digite seu e-mail"
-                value={email}
-                onChange={capturaEmail}
-                required
-              />
             </div>
             <div>
               <label htmlFor="telefone">Telefone</label>
@@ -253,6 +274,7 @@ export default function CadastroOffer() {
                 placeholder="Digite seu telefone. Apenas números."
                 value={formatarTelefone(telefone)}
                 onChange={capturaTelefone}
+                disabled={!editando}
                 required
               />
             </div>
@@ -264,6 +286,7 @@ export default function CadastroOffer() {
                 placeholder="Digite sua senha"
                 value={senha}
                 onChange={capturaSenha}
+                disabled={!editando}
                 required
               />
             </div>
@@ -275,12 +298,21 @@ export default function CadastroOffer() {
                 placeholder="Confirme sua senha"
                 value={confirmaSenha}
                 onChange={capturaConfirmaSenha}
+                disabled={!editando}
                 required
               />
             </div>
             <div className={s.cadastroDivButtom}>
-              <button type="submit" onClick={enviarDados}>
-                Cadastrar
+              <button type="button" onClick={enviarDados}>
+                {editando ? "Salvar alterações" : "Alterar dados"}
+              </button>
+
+              <button
+                className={s.botaoDelete}
+                type="button"
+                onClick={deletarConta}
+              >
+                {editando ? "Cancelar" : "Deletar Perfil"}
               </button>
             </div>
           </form>
