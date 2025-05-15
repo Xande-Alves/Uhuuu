@@ -16,6 +16,7 @@ import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import PerfilSeacher from "./Pages/Perfis/Seacher/PerfilSeacher/PerfilSeacher";
 import PerfilOffer from "./Pages/Perfis/Offer/PerfilOffer/PerfilOffer";
+import CadastroEvento from "./Pages/OfferView/CadastroEvento/CadastroEvento";
 
 export default function App() {
   const [loggedUser, setLoggedUser] = useState(() => {
@@ -46,6 +47,7 @@ export default function App() {
         <Route path="SeusRoles" element={<SeusRoles />} />
         <Route path="CadastroSeacher" element={<CadastroSeacher />} />
         <Route path="CadastroOffer" element={<CadastroOffer />} />
+        <Route path="CadastroEvento" element={<CadastroEvento />} />
         <Route
           path="PerfilSeacher"
           element={

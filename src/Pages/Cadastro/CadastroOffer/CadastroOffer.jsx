@@ -1,12 +1,12 @@
 import s from "./cadastroOffer.module.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function CadastroOffer() {
   const navigate = useNavigate();
 
-  const [nome, setNome] = useState("");
+  const [nome, setNome] = useState(""); 
   const [logradouro, setLogradouro] = useState("");
   const [numero, setNumero] = useState("");
   const [complemento, setComplemento] = useState("");
@@ -40,7 +40,7 @@ export default function CadastroOffer() {
     setEstado(e.target.value);
   };
   const capturaEmail = (e) => {
-    setEmail(e.target.value);
+    setEmail(e.target.value.toLowerCase());
   };
   const capturaTelefone = (e) => {
     const valorDigitado = e.target.value.replace(/\D/g, ""); // Remove não-dígitos
@@ -69,8 +69,34 @@ export default function CadastroOffer() {
     return numero;
   }
 
+  //BUSCA (GET) DOS CADASTRADOS PARA VERIFICAR DUPLICIDADE DE EMAIL
+  const [offers, setOffers] = useState([]);
+
+  useEffect(() => {
+    const fetchOffers = async () => {
+      try {
+        const response = await axios.get(
+          "https://api-uhuuu.onrender.com/cadastrados_offers"
+        );
+        setOffers(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar usuários cadastrados:", error);
+      }
+    };
+
+    fetchOffers();
+  }, []);
+
   const enviarDados = async (e) => {
     e.preventDefault();
+
+    //VERIFICAÇÃO DE EMAIL JÁ CADASTRADO NO SISTEMA
+    const userOffer = offers.find((user) => user.email === email);
+
+    if (userOffer) {
+      alert("E-mail já possui cadastro no sistema.");
+      return;
+    }
 
     //VALIDA EMAIL PARA UM FORMATO VÁLIDO
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

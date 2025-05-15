@@ -13,7 +13,7 @@ export default function PerfilSeacher({ loggedUser, setLoggedUser }) {
   const [email, setEmail] = useState(loggedUser.email);
   const [telefone, setTelefone] = useState("");
   const [senha, setSenha] = useState("");
-  const [confirmaSenha, setConfirmaSenha] = useState("");
+  const [confirmaSenha, setConfirmaSenha] = useState(""); 
 
   useEffect(() => {
     if (loggedUser) {
@@ -141,7 +141,7 @@ export default function PerfilSeacher({ loggedUser, setLoggedUser }) {
       const resposta = await axios.put(endPointAPI, dadosAEnviar);
       alert("Dados atualizados com sucesso!");
 
-      // Limpa os campos após o envio bem-sucedido
+      // Limpa os campos após o envio bem-sucedido, deixando apenas os campos de senha em branco
       setNome(nome);
       setSobrenome(sobrenome);
       setData_nascimento(data_nascimento);
@@ -151,7 +151,7 @@ export default function PerfilSeacher({ loggedUser, setLoggedUser }) {
 
       setEditando(false);
     } catch (erro) {
-      console.error("Erro ao cadastrar usuário buscador:", erro);
+      console.error("Erro ao atualizar usuário buscador:", erro);
       alert(
         "Erro ao atualizar usuário buscador. Verifique os dados e tente novamente."
       );

@@ -278,7 +278,7 @@ export default function Header({ loggedUser, setLoggedUser }) {
       setUsuario(e.target.value);
     };
     const capturaSenha = (e) => {
-      setSenha(e.target.value);
+      setSenha(e.target.value); 
     };
 
     //AUTENTICAÇÃO DO LOGIN
@@ -304,6 +304,10 @@ export default function Header({ loggedUser, setLoggedUser }) {
         alert(
           "Dados incorretos ou usuário não possui cadastro no sistema. Verifique os dados ou efetue o cadastro."
         );
+      }
+
+      if (userOffer) {
+        navigate("/CadastroEvento");
       }
     };
 

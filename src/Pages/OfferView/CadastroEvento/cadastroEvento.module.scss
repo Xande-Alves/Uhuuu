@@ -1,0 +1,255 @@
+.cadastroListaEvento {
+    display: flex;
+    justify-content: space-between;
+
+  .cadastroContent {
+    display: flex;
+    justify-content: center;
+    width: 79%; 
+  }
+
+  .cadastro {
+    width: 100%;
+    height: auto;
+    background-color: #fefae0;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0 20px 0;
+
+    h1 {
+      text-align: center;
+      color: #18022a;
+      margin-bottom: 20px;
+      font-size: 1.7em;
+    }
+
+    form {
+      width: 100%;
+      color: #18022a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin: 15px 0 15px 0;
+        align-items: center;
+
+        input {
+          width: 80%;
+          height: 30px;
+          border-radius: 10px;
+          border: solid 1px rgba(0, 0, 0, 0.664);
+          padding: 20px;
+        }
+
+        input::placeholder {
+          opacity: 1;
+          transition: opacity 0.3s ease;
+        }
+
+        input:focus::placeholder {
+          opacity: 0;
+        }
+      }
+
+      .dataHora {
+        display: flex;
+        justify-content: space-between;
+
+        .dataHoraInicio {
+          label {
+            margin-right: 103px;
+          }
+        }
+        .dataHoraFim {
+          label {
+            margin-left: 90px;
+          }
+        }
+      }
+
+      .endereco {
+        display: flex;
+
+        .dadosEndereco {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          margin: 0;
+
+          .rua {
+            display: flex;
+            width: 87%;
+            margin: 0;
+
+            .inputLogradouro {
+              width: 87%;
+            }
+          }
+
+          .numeroComplemento {
+            display: flex;
+            width: 87%;
+            margin: 0;
+
+            .divNumero {
+              display: flex;
+              justify-content: space-between;
+              width: 40%;
+              margin-right: 20px;
+
+              .inputNumero {
+                width: 50%;
+                -moz-appearance: textfield; /* Remove setinhas no Firefox */
+
+                &::-webkit-inner-spin-button,
+                &::-webkit-outer-spin-button {
+                  -webkit-appearance: none;
+                  margin: 0;
+                }
+              }
+            }
+          }
+
+          .bairroCidadeEstado {
+            display: flex;
+            width: 87%;
+            margin: 0;
+
+            .divEstado {
+              width: 60%;
+              margin-left: 20px;
+
+              input {
+                width: 50%;
+              }
+            }
+
+            .divCidade {
+              margin-left: 20px;
+            }
+          }
+        }
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #23023c;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        box-shadow: inset 0px 1px 5px #00000059;
+        transition: 0.3s ease;
+        justify-items: center;
+      }
+
+      button:hover {
+        background-color: #f44336;
+      }
+
+      .cadastroDivButtom {
+        width: 70%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+}
+
+//RESPONSIVIDADE
+@media (max-width: 500px) {
+  .cadastro {
+    width: 100%;
+
+    label {
+      font-size: 0.8em;
+    }
+
+    .labelLogradouro {
+      margin-right: 10px;
+    }
+
+    .endereco {
+      width: 100%;
+
+      .labelEndereco {
+        display: none;
+      }
+
+      .dadosEndereco {
+        width: 100%;
+
+        .rua {
+          width: 100% !important; // Garante que ocupe tudo
+        }
+
+        .numeroComplemento {
+          width: 100% !important;
+
+          .divNumero {
+            label {
+              margin: 0;
+            }
+
+            input {
+              padding-left: 2px;
+              padding-right: 2px;
+              text-align: center;
+              margin: 0;
+            }
+          }
+
+          .divComplemento {
+            input::placeholder {
+              color: transparent;
+            }
+          }
+        }
+
+        .bairroCidadeEstado {
+          width: 100% !important;
+          margin: 0;
+
+          .divBairro {
+            input {
+              padding-left: 2px;
+              padding-right: 2px;
+              text-align: center;
+
+              &::placeholder {
+                color: transparent;
+              }
+            }
+          }
+
+          .divCidade {
+            input {
+              padding-left: 2px;
+              padding-right: 2px;
+              text-align: center;
+
+              &::placeholder {
+                color: transparent;
+              }
+            }
+          }
+
+          .divEstado {
+            //margin: 0;
+
+            input {
+              padding-left: 2px;
+              padding-right: 2px;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}

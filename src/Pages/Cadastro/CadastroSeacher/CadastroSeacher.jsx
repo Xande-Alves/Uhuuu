@@ -1,6 +1,6 @@
 import s from "./cadastroSeacher.module.scss";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function CadastroSeacher() {
@@ -24,7 +24,7 @@ export default function CadastroSeacher() {
     setData_nascimento(e.target.value);
   };
   const capturaEmail = (e) => {
-    setEmail(e.target.value);
+    setEmail(e.target.value.toLowerCase());
   };
   const capturaTelefone = (e) => {
     const valorDigitado = e.target.value.replace(/\D/g, ""); // Remove não-dígitos
@@ -53,8 +53,36 @@ export default function CadastroSeacher() {
     return numero;
   }
 
+  //BUSCA (GET) DOS CADASTRADOS PARA VERIFICAR DUPLICIDADE DE EMAIL
+  const [seachers, setSeachers] = useState([]);
+
+  useEffect(() => {
+    const fetchSeachers = async () => {
+      try {
+        const response = await axios.get(
+          "https://api-uhuuu.onrender.com/cadastrados_seachers"
+        );
+        setSeachers(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar usuários cadastrados:", error);
+      }
+    };
+
+    fetchSeachers();
+  }, []);
+
+
   const enviarDados = async (e) => {
     e.preventDefault();
+
+    //VERIFICAÇÃO DE EMAIL JÁ CADSTRADO NO SISTEMA
+    const userSeacher = seachers.find((user) => user.email === email);
+
+    if (userSeacher) {
+      alert("E-mail já possui cadastro no sistema.");
+      return;
+    }
+
     //CERTIFICA A NÃO EXISTENCIA DE NUMEROS E CARACTERES ESPECIAIS NO NOME
     for (const caractere of nome) {
       if (!/[a-zA-Z]/.test(caractere)) {

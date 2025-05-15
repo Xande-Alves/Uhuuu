@@ -1,40 +1,30 @@
-import s from "./perfilOffer.module.scss";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import EventList from "../../../Components/EventList/EventList";
+import s from "./cadastroEvento.module.scss";
+import { useState } from "react";
 
-export default function PerfilOffer({ loggedUser, setLoggedUser }) {
-  const [editando, setEditando] = useState(false);
-  const navigate = useNavigate();
+export default function CadastroEvento() {
+  const [preenchendo, setPreenchendo] = useState(false);
 
   const [nome, setNome] = useState("");
+  const [dataHoraInicio, setDataHoraInicio] = useState("");
+  const [dataHoraFim, setDataHoraFim] = useState("");
   const [logradouro, setLogradouro] = useState("");
   const [numero, setNumero] = useState("");
   const [complemento, setComplemento] = useState("");
   const [bairro, setBairro] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
-  const [email, setEmail] = useState(loggedUser.email);
+  const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
-  const [senha, setSenha] = useState("");
-  const [confirmaSenha, setConfirmaSenha] = useState("");
-
-  useEffect(() => {
-    if (loggedUser) {
-      setNome(loggedUser.nome || "");
-      setLogradouro(loggedUser.logradouro || "");
-      setNumero(loggedUser.numero || "");
-      setComplemento(loggedUser.complemento || "");
-      setBairro(loggedUser.bairro || "");
-      setCidade(loggedUser.cidade || "");
-      setEstado(loggedUser.estado || "");
-      setEmail(loggedUser.email || "");
-      setTelefone(loggedUser.telefone || "");
-    }
-  }, [loggedUser]);
 
   const capturaNome = (e) => {
     setNome(e.target.value);
+  };
+  const capturaDataHoraInicio = (e) => {
+    setDataHoraInicio(e.target.value);
+  };
+  const capturaDataHoraFim = (e) => {
+    setDataHoraFim(e.target.value);
   };
   const capturaLogradouro = (e) => {
     setLogradouro(e.target.value);
@@ -54,16 +44,13 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
   const capturaEstado = (e) => {
     setEstado(e.target.value);
   };
+  const capturaEmail = (e) => {
+    setEmail(e.target.value.toLowerCase());
+  };
   const capturaTelefone = (e) => {
     const valorDigitado = e.target.value.replace(/\D/g, ""); // Remove não-dígitos
     const max11Digitos = valorDigitado.slice(0, 11); // Limita a 11 dígitos
     setTelefone(max11Digitos);
-  };
-  const capturaSenha = (e) => {
-    setSenha(e.target.value);
-  };
-  const capturaConfirmaSenha = (e) => {
-    setConfirmaSenha(e.target.value);
   };
 
   //RETORNA NÚMERO FORMATADO DO TELEFONE AO USUÁRIO
@@ -83,21 +70,6 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
 
   const enviarDados = async (e) => {
     e.preventDefault();
-    if (!editando) {
-      // Ativa modo edição, sem enviar nada
-      setEditando(true);
-      return;
-    }
-
-    //CERTIFICA A NÃO EXISTENCIA DE NUMEROS E CARACTERES ESPECIAIS NO NOME
-    for (const caractere of nome) {
-      if (!/[a-zA-Z]/.test(caractere)) {
-        alert(
-          "O campo nome não deve possuir números ou caracteres especiais. Por favor, tente novamente."
-        );
-        return;
-      }
-    }
 
     //VALIDA EMAIL PARA UM FORMATO VÁLIDO
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -115,113 +87,49 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
       alert("O número de telefone deve conter 11 dígitos (DDD + número).");
       return;
     }
-
-    //CONFIRMA QUE A SENHA E CONFIRMA SENHA SÃO IGUAIS
-    if (senha !== confirmaSenha) {
-      alert(
-        "Os campos de senha e confirmação de senha não coincidem. Por favor, tente novamente."
-      );
-      return;
-    }
-
-    //LOGICA DO PUT
-    const endPointAPI = "https://api-uhuuu.onrender.com/atualizar_offer";
-
-    const dadosAEnviar = {
-      nome,
-      logradouro, 
-      numero,
-      complemento,
-      bairro,
-      cidade,
-      estado,
-      email,
-      telefone
-    };
-
-    if (senha != "") {
-      dadosAEnviar.senha = senha;
-    }
-
-    try {
-      const resposta = await axios.put(endPointAPI, dadosAEnviar);
-      alert("Dados atualizados com sucesso!");
-
-      // Limpa os campos após o envio bem-sucedido, deixando apenas os campos de senha em branco
-      setNome(nome);
-      setLogradouro(logradouro);
-      setNumero(numero);
-      setComplemento(complemento);
-      setBairro(bairro);
-      setCidade(cidade);
-      setEstado(estado);
-      setEmail(email);
-      setTelefone(telefone);
-      setSenha("");
-      setConfirmaSenha("");
-
-      setEditando(false);
-    } catch (erro) {
-      console.error("Erro ao atualizar usuário ofertador:", erro);
-      alert(
-        "Erro ao atualizar usuário ofertador. Verifique os dados e tente novamente."
-      );
-      setEditando(false);
-    }
-  };
-
-  //DELETAR CONTA
-  const deletarConta = async (e) => {
-    e.preventDefault();
-    if (editando) {
-      // Cancela a edição e atualização de dados
-      setEditando(false);
-      return;
-    }
-
-    const confirmacao = confirm(
-      "Tem certeza de que deseja deletar sua conta? Esta ação é irreversível!"
-    );
-
-    if (!confirmacao) {
-      return; // Usuário cancelou a exclusão
-    }
-
-    //LOGICA DO DELETE
-    const endPointAPI = "https://api-uhuuu.onrender.com/deletar_offer";
-
-    const dadosAEnviar = { email };
-
-    try {
-      const resposta = await axios.delete(endPointAPI, {
-        data: dadosAEnviar,
-      });
-      alert("Conta deletada com sucesso!");
-      setLoggedUser(null);
-      navigate("/");
-    } catch (erro) {
-      console.error("Erro ao deletar usuário buscador:", erro);
-      alert("Erro ao deletar usuário buscador.");
-    }
   };
 
   return (
-    <>
+    <div className={s.cadastroListaEvento}>
+      <EventList />
       <div className={s.cadastroContent}>
         <section className={s.cadastro}>
-          <h1>Dados do Perfil</h1>
+          <h1>Cadastro de Eventos</h1>
           <form>
             <div>
               <label htmlFor="nome">Nome</label>
               <input
                 type="text"
                 id="nome"
-                placeholder="Digite seu primeiro nome"
+                placeholder="Digite o nome do evento"
                 value={nome}
                 onChange={capturaNome}
-                disabled={!editando}
                 required
               />
+            </div>
+            <div className={s.dataHora}>
+              <div className={s.dataHoraInicio}>
+                <label htmlFor="nome">Data/Hora de início</label>
+                <input
+                  type="datetime-local"
+                  id="inicio"
+                  placeholder="Data/Hora início"
+                  value={dataHoraInicio}
+                  onChange={capturaDataHoraInicio}
+                  required
+                />
+              </div>
+              <div className={s.dataHoraFim}>
+                <label htmlFor="nome">Data/Hora de fim</label>
+                <input
+                  type="datetime-local"
+                  id="fim"
+                  placeholder="Data/Hora fim"
+                  value={dataHoraFim}
+                  onChange={capturaDataHoraFim}
+                  required
+                />
+              </div>
             </div>
             <div className={s.endereco}>
               <label className={s.labelEndereco} htmlFor="endereço">
@@ -240,7 +148,6 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
                       placeholder="Digite sua rua, avenida..."
                       value={logradouro}
                       onChange={capturaLogradouro}
-                      disabled={!editando}
                       required
                     />
                   </div>
@@ -254,7 +161,6 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
                       id="numero"
                       value={numero}
                       onChange={capturaNumero}
-                      disabled={!editando}
                       required
                     />
                   </div>
@@ -266,7 +172,6 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
                       placeholder="Complemento do endereço"
                       value={complemento}
                       onChange={capturaComplemento}
-                      disabled={!editando}
                     />
                   </div>
                 </div>
@@ -279,7 +184,6 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
                       placeholder="Digite seu bairro"
                       value={bairro}
                       onChange={capturaBairro}
-                      disabled={!editando}
                       required
                     />
                   </div>
@@ -291,7 +195,6 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
                       placeholder="Digite a cidade"
                       value={cidade}
                       onChange={capturaCidade}
-                      disabled={!editando}
                       required
                     />
                   </div>
@@ -302,12 +205,22 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
                       id="estado"
                       value={estado}
                       onChange={capturaEstado}
-                      disabled={!editando}
                       required
                     />
                   </div>
                 </div>
               </div>
+            </div>
+            <div>
+              <label htmlFor="email">E-mail</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="Digite seu e-mail"
+                value={email}
+                onChange={capturaEmail}
+                required
+              />
             </div>
             <div>
               <label htmlFor="telefone">Telefone</label>
@@ -317,50 +230,21 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
                 placeholder="Digite seu telefone. Apenas números."
                 value={formatarTelefone(telefone)}
                 onChange={capturaTelefone}
-                disabled={!editando}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="password">Senha</label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Digite sua senha"
-                value={senha}
-                onChange={capturaSenha}
-                disabled={!editando}
-                required
-              />
-            </div>
-            <div className={s.divConfirmaSenha}>
-              <label htmlFor="passwordConfirma">Confirme sua senha</label>
-              <input
-                type="password"
-                id="passwordConfirma"
-                placeholder="Confirme sua senha"
-                value={confirmaSenha}
-                onChange={capturaConfirmaSenha}
-                disabled={!editando}
                 required
               />
             </div>
             <div className={s.cadastroDivButtom}>
               <button type="button" onClick={enviarDados}>
-                {editando ? "Salvar alterações" : "Alterar dados"}
+                {preenchendo ? "Salvar alterações" : "Próximo"}
               </button>
 
-              <button
-                className={s.botaoDelete}
-                type="button"
-                onClick={deletarConta}
-              >
-                {editando ? "Cancelar" : "Deletar Perfil"}
+              <button className={s.botaoDelete} type="button" disabled>
+                {preenchendo ? "Cancelar" : "Cadastrar"}
               </button>
             </div>
           </form>
         </section>
       </div>
-    </>
+    </div>
   );
 }
