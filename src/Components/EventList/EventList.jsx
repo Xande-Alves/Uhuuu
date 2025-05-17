@@ -125,13 +125,15 @@ export default function EventList() {
   return (
     <div className={s.eventList}>
       <h1>Eventos cadastrados</h1>
-      {eventos.map((evento)=>(
-        <div className={s.evento}>
+      <div className={s.caixaEventos}>
+        {eventos.map((evento) => (
+          <div className={s.evento}>
             <h3>{evento.titulo}</h3>
             <p>Início: {formatarData(evento.dataInicio)}</p>
             <p>Término: {formatarData(evento.dataTermino)}</p>
-        </div>
-      ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

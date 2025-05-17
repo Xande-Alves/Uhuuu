@@ -278,7 +278,7 @@ export default function Header({ loggedUser, setLoggedUser }) {
       setUsuario(e.target.value);
     };
     const capturaSenha = (e) => {
-      setSenha(e.target.value); 
+      setSenha(e.target.value);
     };
 
     //AUTENTICAÇÃO DO LOGIN
@@ -444,7 +444,7 @@ export default function Header({ loggedUser, setLoggedUser }) {
       <div>
         {isAuthenticated && loggedUser && (
           <div className={s.welcomeMessage}>
-            <p>Bem-vindo {loggedUser.nome}!</p>
+            <p>Bem-vindo, {loggedUser.nome}!</p>
             <button onClick={handleLogout}>Sair</button>
           </div>
         )}

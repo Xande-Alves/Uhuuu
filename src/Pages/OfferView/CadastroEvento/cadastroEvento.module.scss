@@ -1,11 +1,40 @@
 .cadastroListaEvento {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
   .cadastroContent {
     display: flex;
-    justify-content: center;
-    width: 79%; 
+    flex-direction: column;
+    width: 79%;
+    margin-top: 20px;
+
+    .divTabButtons {
+      .tabButtons {
+        padding: 3px;
+        padding-top: 7px;
+        width: 20%;
+        border: none;
+        border-radius: 10px 10px 0 0;
+        background-color: #f6d93d;
+        cursor: pointer;
+        font-weight: bold;
+        color: #23023c;
+        border: solid 1px #00000078;
+        border-bottom: none;
+        transition: 0.3s ease;
+
+        &:hover {
+          background: linear-gradient(135deg, #c0392b, #e74c3c);
+          color: white;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        &.ativo {
+          background-color: #c0392b;
+          color: white;
+        }
+      }
+    }
   }
 
   .cadastro {
@@ -14,7 +43,9 @@
     background-color: #fefae0;
     padding: 20px;
     border-radius: 10px;
-    margin: 20px 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     h1 {
       text-align: center;
@@ -26,9 +57,6 @@
     form {
       width: 100%;
       color: #18022a;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
 
       div {
         width: 100%;
@@ -135,28 +163,444 @@
         }
       }
 
-      button {
-        padding: 10px 20px;
-        background-color: #23023c;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        box-shadow: inset 0px 1px 5px #00000059;
-        transition: 0.3s ease;
-        justify-items: center;
+      .descricao {
+        height: 200px;
+        width: 80%;
+        border-radius: 10px;
+        border: solid 1px rgba(0, 0, 0, 0.664);
+        padding: 20px;
+        overflow: hidden;
+      }
+    }
+
+    .abaFotos {
+      width: 100%;
+
+      .formFotos {
+        width: 100%;
+        color: #18022a;
+
+        div {
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          margin: 15px 0 15px 0;
+          align-items: center;
+
+          label {
+            width: 150px;
+            margin-right: 30px;
+          }
+
+          .inputFotos {
+            width: auto;
+            height: auto;
+            border-radius: 0;
+            border: none;
+            padding: 0;
+          }
+
+          .inputDescricaoFoto {
+            width: 80%;
+            border-radius: 10px;
+            border: solid 1px rgba(0, 0, 0, 0.664);
+            padding: 20px;
+            height: 50px;
+            overflow: hidden;
+            padding-top: 5px;
+          }
+        }
       }
 
-      button:hover {
-        background-color: #f44336;
-      }
-
-      .cadastroDivButtom {
-        width: 70%;
+      .listaFoto {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        overflow-x: auto; // mostra a barra só quando necessário
+        margin-top: 15px;
+        padding-bottom: 5px; // espaço opcional para não colar na barra
+        gap: 3px; // espaçamento entre os itens
+
+        // Evita quebras de linha nos itens
+        white-space: nowrap;
+
+        // Garante que o container não force scroll desnecessário
+        width: 100%;
+
+        div {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .divFotoDescricao {
+            display: flex;
+            flex-direction: column;
+            border: solid 2px #18022a;
+            border-radius: 5px;
+            padding: 2px;
+            width: 200px; // fixa largura do container
+            flex-shrink: 0; // evita encolhimento num scroll horizontal
+
+            img {
+              width: 100%;
+              height: 200px;
+              object-fit: cover; // mantém proporção visual, cortando excesso se necessário
+              border-radius: 5px;
+              margin-bottom: 8px;
+              display: block;
+            }
+
+            p {
+              text-align: justify;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+              white-space: normal;
+              font-size: 0.8em;
+            }
+          }
+
+          .divBotaoDeleteFoto {
+            display: flex;
+            justify-content: center;
+            margin-top: 8px;
+
+            button {
+              display: flex;    // centraliza o "X"
+              align-items: center;
+              justify-content: center;
+              border-radius: 50%;
+              color: white;
+              background-color: red;
+              transition: background-color 0.6s ease;
+              margin: auto;
+              width: 17px;
+
+              &:hover {
+                background-color: #c0392b;
+              }
+            }
+          }
+        }
       }
+    }
+
+    .abaDescricao {
+      width: 100%;
+
+      .formDescricao {
+        width: 100%;
+        color: #18022a;
+
+        div {
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          margin: 15px 0 15px 0;
+          align-items: center;
+
+          label {
+            width: 150px;
+            margin-right: 30px;
+          }
+
+          .inputDescricaoAtracao {
+            width: 80%;
+            border-radius: 10px;
+            border: solid 1px rgba(0, 0, 0, 0.664);
+            padding: 20px;
+            height: 60px;
+            overflow: hidden;
+            padding-top: 5px;
+          }
+        }
+      }
+
+      .listaAtracao {
+        display: flex;
+        overflow-x: auto; // mostra a barra só quando necessário
+        margin-top: 15px;
+        padding-bottom: 5px; // espaço opcional para não colar na barra
+        gap: 3px; // espaçamento entre os itens
+
+        // Evita quebras de linha nos itens
+        white-space: nowrap;
+
+        // Garante que o container não force scroll desnecessário
+        width: 100%;
+
+        div {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .divAtracaoDescricao {
+            display: flex;
+            flex-direction: column;
+            border: solid 2px #18022a;
+            border-radius: 5px;
+            padding: 2px;
+            width: 200px; // fixa largura do container
+            flex-shrink: 0; // evita encolhimento num scroll horizontal
+
+            h3 {
+              text-align: justify;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+              white-space: normal;
+            }
+
+            p {
+              text-align: justify;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+              white-space: normal;
+              font-size: 0.8em;
+            }
+          }
+
+          .divBotaoDeleteAtracao {
+            display: flex;
+            justify-content: center;
+            margin-top: 8px;
+
+            button {
+              display: flex;    // centraliza o "X"
+              align-items: center;
+              justify-content: center;
+              border-radius: 50%;
+              color: white;
+              background-color: red;
+              transition: background-color 0.6s ease;
+              margin: auto;
+              width: 17px;
+
+              &:hover {
+                background-color: #c0392b;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .abaIngresso {
+      width: 100%;
+
+      .formIngresso {
+        width: 100%;
+        color: #18022a;
+
+        div {
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          margin: 15px 0 15px 0;
+          align-items: center;
+
+          label {
+            width: 150px;
+            margin-right: 30px;
+          }
+
+          .inputDescricaoIngresso {
+            width: 80%;
+            border-radius: 10px;
+            border: solid 1px rgba(0, 0, 0, 0.664);
+            padding: 20px;
+            height: 60px;
+            overflow: hidden;
+            padding-top: 5px;
+          }
+        }
+      }
+
+      .listaIngresso {
+        display: flex;
+        overflow-x: auto; // mostra a barra só quando necessário
+        margin-top: 15px;
+        padding-bottom: 5px; // espaço opcional para não colar na barra
+        gap: 3px; // espaçamento entre os itens
+
+        // Evita quebras de linha nos itens
+        white-space: nowrap;
+
+        // Garante que o container não force scroll desnecessário
+        width: 100%;
+
+        div {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .divIngressoDescricao {
+            display: flex;
+            flex-direction: column;
+            border: solid 2px #18022a;
+            border-radius: 5px;
+            padding: 2px;
+            width: 200px; // fixa largura do container
+            flex-shrink: 0; // evita encolhimento num scroll horizontal
+
+            h3 {
+              text-align: justify;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+              white-space: normal;
+            }
+
+            p {
+              text-align: justify;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+              white-space: normal;
+              font-size: 0.8em;
+            }
+          }
+
+          .divBotaoDeleteIngresso {
+            display: flex;
+            justify-content: center;
+            margin-top: 8px;
+
+            button {
+              display: flex;    // centraliza o "X"
+              align-items: center;
+              justify-content: center;
+              border-radius: 50%;
+              color: white;
+              background-color: red;
+              transition: background-color 0.6s ease;
+              margin: auto;
+              width: 17px;
+
+              &:hover {
+                background-color: #c0392b;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .abaPromocao {
+      width: 100%;
+
+      .formPromocao {
+        width: 100%;
+        color: #18022a;
+
+        div {
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          margin: 15px 0 15px 0;
+          align-items: center;
+
+          label {
+            width: 150px;
+            margin-right: 30px;
+          }
+
+          .inputDescricaoPromocao {
+            width: 80%;
+            border-radius: 10px;
+            border: solid 1px rgba(0, 0, 0, 0.664);
+            padding: 20px;
+            height: 60px;
+            overflow: hidden;
+            padding-top: 5px;
+          }
+        }
+      }
+
+      .listaPromocao {
+        display: flex;
+        overflow-x: auto; // mostra a barra só quando necessário
+        margin-top: 15px;
+        padding-bottom: 5px; // espaço opcional para não colar na barra
+        gap: 3px; // espaçamento entre os itens
+
+        // Evita quebras de linha nos itens
+        white-space: nowrap;
+
+        // Garante que o container não force scroll desnecessário
+        width: 100%;
+
+        div {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .divPromocaoDescricao {
+            display: flex;
+            flex-direction: column;
+            border: solid 2px #18022a;
+            border-radius: 5px;
+            padding: 2px;
+            width: 200px; // fixa largura do container
+            flex-shrink: 0; // evita encolhimento num scroll horizontal
+
+            h3 {
+              text-align: justify;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+              white-space: normal;
+            }
+
+            p {
+              text-align: justify;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+              white-space: normal;
+              font-size: 0.8em;
+            }
+          }
+
+          .divBotaoDeletePromocao {
+            display: flex;
+            justify-content: center;
+            margin-top: 8px;
+
+            button {
+              display: flex;    // centraliza o "X"
+              align-items: center;
+              justify-content: center;
+              border-radius: 50%;
+              color: white;
+              background-color: red;
+              transition: background-color 0.6s ease;
+              margin: auto;
+              width: 17px;
+
+              &:hover {
+                background-color: #c0392b;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #23023c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: inset 0px 1px 5px #00000059;
+      transition: 0.3s ease;
+      justify-items: center;
+    }
+
+    button:hover {
+      background-color: #f44336;
+    }
+
+    .cadastroDivButtom {
+      margin-top: 50px;
+      width: 70%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }

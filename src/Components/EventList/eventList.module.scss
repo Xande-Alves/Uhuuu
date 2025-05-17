@@ -1,7 +1,7 @@
 .eventList {
   width: 20vw;
   background-color: #fefae0;
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
   border: solid 1px #00000078;
   margin-top: 20px;
@@ -17,23 +17,28 @@
     border-bottom: solid 1px #00000078;
   }
 
-  .evento {
-    display: flex;
-    flex-direction: column;
-    border-bottom: solid #23023c;
-    padding: 5px;
-    transition: background-color 0.6s ease;
+  .caixaEventos {
+    overflow-y: scroll;
+    height: 920px;
 
-    h3 {
-      font-size: 1.1em;
-      margin-bottom: 5px;
+    .evento {
+      display: flex;
+      flex-direction: column;
+      border-bottom: solid #23023c;
+      padding: 5px;
+      transition: background-color 0.6s ease;
+
+      h3 {
+        font-size: 1.1em;
+        margin-bottom: 5px;
+      }
     }
-  }
-  .evento:last-child {
-    border: none;
-  }
-  .evento:hover {
-    background-color: #f56358;
+    .evento:last-child {
+      border: none;
+    }
+    .evento:hover {
+      background-color: #f56358;
+    }
   }
 }
 

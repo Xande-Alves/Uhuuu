@@ -1,9 +1,10 @@
 import EventList from "../../../Components/EventList/EventList";
 import s from "./cadastroEvento.module.scss";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function CadastroEvento() {
   const [preenchendo, setPreenchendo] = useState(false);
+  const [abaAtiva, setAbaAtiva] = useState("Dados Gerais");
 
   const [nome, setNome] = useState("");
   const [dataHoraInicio, setDataHoraInicio] = useState("");
@@ -16,6 +17,19 @@ export default function CadastroEvento() {
   const [estado, setEstado] = useState("");
   const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [foto, setFoto] = useState("");
+  const [listaFoto, setListaFoto] = useState([]);
+  const [descricaoFoto, setDescricaoFoto] = useState("");
+  const [listaIngresso, setListaIngresso] = useState([]);
+  const [ingresso, setIngresso] = useState("");
+  const [descricaoIngresso, setDescricaoIngresso] = useState("");
+  const [listaAtracao, setListaAtracao] = useState([]);
+  const [atracao, setAtracao] = useState("");
+  const [descricaoAtracao, setDescricaoAtracao] = useState("");
+  const [listaPromocao, setListaPromocao] = useState([]);
+  const [promocao, setPromocao] = useState("");
+  const [descricaoPromocao, setDescricaoPromocao] = useState("");
 
   const capturaNome = (e) => {
     setNome(e.target.value);
@@ -52,6 +66,134 @@ export default function CadastroEvento() {
     const max11Digitos = valorDigitado.slice(0, 11); // Limita a 11 dígitos
     setTelefone(max11Digitos);
   };
+  const capturaDescricao = (e) => {
+    setDescricao(e.target.value);
+  };
+  const capturaFoto = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFoto(reader.result); // base64 da imagem
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const capturaDescricaoFoto = (e) => {
+    setDescricaoFoto(e.target.value);
+  };
+  const capturaTituloAtracao = (e) => {
+    setAtracao(e.target.value);
+  };
+  const capturaDescricaoAtracao = (e) => {
+    setDescricaoAtracao(e.target.value);
+  };
+  const capturaTituloIngresso = (e) => {
+    setIngresso(e.target.value);
+  };
+  const capturaDescricaoIngresso = (e) => {
+    setDescricaoIngresso(e.target.value);
+  };
+  const capturaTituloPromocao = (e) => {
+    setPromocao(e.target.value);
+  };
+  const capturaDescricaoPromocao = (e) => {
+    setDescricaoPromocao(e.target.value);
+  };
+
+  //LOGICA DE FORMAÇÃO DA LISTA DE FOTOS
+  const inputFotoRef = useRef(null); //PARA LIMPAR O NOME DO ARQUIVO DO INPUT FOTO
+
+  const adicionaFoto = () => {
+    const fotoDescrita = {
+      foto: foto,
+      legenda: descricaoFoto,
+    };
+    if (foto) {
+      setListaFoto([...listaFoto, fotoDescrita]);
+      setFoto("");
+      setDescricaoFoto("");
+
+      if (inputFotoRef.current) {
+        inputFotoRef.current.value = ""; // limpa o input de arquivo
+      }
+    } else {
+      alert("Adicione uma imagem primeiro.");
+    }
+  };
+
+  const deletaFoto = (indexParaRemover) => {
+    const novaLista = listaFoto.filter(
+      (_, index) => index !== indexParaRemover
+    );
+    setListaFoto(novaLista);
+  };
+
+  //LOGICA DE FORMAÇÃO DA LISTA DE ATRAÇÕES
+  const adicionaAtracao = () => {
+    const atracaoDescrita = {
+      atracao: atracao,
+      atracaoDescricao: descricaoAtracao,
+    };
+    if (atracao) {
+      setListaAtracao([...listaAtracao, atracaoDescrita]);
+      setAtracao("");
+      setDescricaoAtracao("");
+    } else {
+      alert("Adicione o título da atração primeiro.");
+    }
+  };
+
+  const deletaAtracao = (indexParaRemover) => {
+    const novaLista = listaAtracao.filter(
+      (_, index) => index !== indexParaRemover
+    );
+    setListaAtracao(novaLista);
+  };
+
+  //LOGICA DE FORMAÇÃO DA LISTA DE INGRESSOS
+  const adicionaIngresso = () => {
+    const ingressoDescrito = {
+      ingresso: ingresso,
+      ingressoDescricao: descricaoIngresso,
+    };
+    if (ingresso) {
+      setListaIngresso([...listaIngresso, ingressoDescrito]);
+      setIngresso("");
+      setDescricaoIngresso("");
+    } else {
+      alert("Adicione o título de ingresso primeiro.");
+    }
+  };
+
+  const deletaIngresso = (indexParaRemover) => {
+    const novaLista = listaIngresso.filter(
+      (_, index) => index !== indexParaRemover
+    );
+    setListaIngresso(novaLista);
+  };
+
+  //LOGICA DE FORMAÇÃO DA LISTA DE PROMOÇÕES
+  const adicionaPromocao = () => {
+    const promocaoDescrita = {
+      promocao: promocao,
+      promocaoDescricao: descricaoPromocao,
+    };
+    if (promocao) {
+      setListaPromocao([...listaPromocao, promocaoDescrita]);
+      setPromocao("");
+      setDescricaoPromocao("");
+    } else {
+      alert("Adicione o título de promoção primeiro.");
+    }
+  };
+
+  const deletaPromocao = (indexParaRemover) => {
+    const novaLista = listaPromocao.filter(
+      (_, index) => index !== indexParaRemover
+    );
+    setListaPromocao(novaLista);
+  };
 
   //RETORNA NÚMERO FORMATADO DO TELEFONE AO USUÁRIO
   function formatarTelefone(numero) {
@@ -87,162 +229,431 @@ export default function CadastroEvento() {
       alert("O número de telefone deve conter 11 dígitos (DDD + número).");
       return;
     }
+
+    //VERIFICA SE A DATA DE INICIO É ANTERIOR A DE TERMINO
+    if (new Date(dataHoraInicio) >= new Date(dataHoraFim)) {
+      alert("A data/hora de início deve ser anterior à de fim.");
+      return;
+    }
   };
 
   return (
     <div className={s.cadastroListaEvento}>
       <EventList />
       <div className={s.cadastroContent}>
+        <div className={s.divTabButtons}>
+          <button
+            className={`${s.tabButtons} ${
+              abaAtiva === "Dados Gerais" ? s.ativo : ""
+            }`}
+            onClick={() => setAbaAtiva("Dados Gerais")}
+          >
+            Dados Gerais
+          </button>
+          <button
+            className={`${s.tabButtons} ${abaAtiva === "fotos" ? s.ativo : ""}`}
+            onClick={() => setAbaAtiva("fotos")}
+          >
+            Fotos
+          </button>
+          <button
+            className={`${s.tabButtons} ${
+              abaAtiva === "atracoes" ? s.ativo : ""
+            }`}
+            onClick={() => setAbaAtiva("atracoes")}
+          >
+            Atrações
+          </button>
+          <button
+            className={`${s.tabButtons} ${
+              abaAtiva === "ingressos" ? s.ativo : ""
+            }`}
+            onClick={() => setAbaAtiva("ingressos")}
+          >
+            Ingressos
+          </button>
+          <button
+            className={`${s.tabButtons} ${
+              abaAtiva === "promocoes" ? s.ativo : ""
+            }`}
+            onClick={() => setAbaAtiva("promocoes")}
+          >
+            Promoções
+          </button>
+        </div>
         <section className={s.cadastro}>
           <h1>Cadastro de Eventos</h1>
-          <form>
-            <div>
-              <label htmlFor="nome">Nome</label>
-              <input
-                type="text"
-                id="nome"
-                placeholder="Digite o nome do evento"
-                value={nome}
-                onChange={capturaNome}
-                required
-              />
-            </div>
-            <div className={s.dataHora}>
-              <div className={s.dataHoraInicio}>
-                <label htmlFor="nome">Data/Hora de início</label>
+          {abaAtiva === "Dados Gerais" && (
+            <form>
+              <div>
+                <label htmlFor="nome">Nome</label>
                 <input
-                  type="datetime-local"
-                  id="inicio"
-                  placeholder="Data/Hora início"
-                  value={dataHoraInicio}
-                  onChange={capturaDataHoraInicio}
+                  type="text"
+                  id="nome"
+                  placeholder="Digite o nome do evento"
+                  value={nome}
+                  onChange={capturaNome}
                   required
                 />
               </div>
-              <div className={s.dataHoraFim}>
-                <label htmlFor="nome">Data/Hora de fim</label>
+              <div className={s.dataHora}>
+                <div className={s.dataHoraInicio}>
+                  <label htmlFor="nome">Data/Hora de início</label>
+                  <input
+                    type="datetime-local"
+                    id="inicio"
+                    placeholder="Data/Hora início"
+                    value={dataHoraInicio}
+                    onChange={capturaDataHoraInicio}
+                    required
+                  />
+                </div>
+                <div className={s.dataHoraFim}>
+                  <label htmlFor="nome">Data/Hora de fim</label>
+                  <input
+                    type="datetime-local"
+                    id="fim"
+                    placeholder="Data/Hora fim"
+                    value={dataHoraFim}
+                    onChange={capturaDataHoraFim}
+                    required
+                  />
+                </div>
+              </div>
+              <div className={s.endereco}>
+                <label className={s.labelEndereco} htmlFor="endereço">
+                  Endereço
+                </label>
+                <div className={s.dadosEndereco}>
+                  <div className={s.rua}>
+                    <div>
+                      <label className={s.labelLogradouro} htmlFor="logradouro">
+                        Logradouro
+                      </label>
+                      <input
+                        className={s.inputLogradouro}
+                        type="text"
+                        id="logradouro"
+                        placeholder="Digite a rua, avenida..."
+                        value={logradouro}
+                        onChange={capturaLogradouro}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className={s.numeroComplemento}>
+                    <div className={s.divNumero}>
+                      <label htmlFor="numero">Número</label>
+                      <input
+                        className={s.inputNumero}
+                        type="number"
+                        id="numero"
+                        value={numero}
+                        onChange={capturaNumero}
+                        required
+                      />
+                    </div>
+                    <div className={s.divComplemento}>
+                      <label htmlFor="complemento">Complemento</label>
+                      <input
+                        type="text"
+                        id="complemento"
+                        placeholder="Complemento do endereço"
+                        value={complemento}
+                        onChange={capturaComplemento}
+                      />
+                    </div>
+                  </div>
+                  <div className={s.bairroCidadeEstado}>
+                    <div className={s.divBairro}>
+                      <label htmlFor="bairro">Bairro</label>
+                      <input
+                        type="text"
+                        id="bairro"
+                        placeholder="Digite o bairro"
+                        value={bairro}
+                        onChange={capturaBairro}
+                        required
+                      />
+                    </div>
+                    <div className={s.divCidade}>
+                      <label htmlFor="cidade">Cidade</label>
+                      <input
+                        type="text"
+                        id="cidade"
+                        placeholder="Digite a cidade"
+                        value={cidade}
+                        onChange={capturaCidade}
+                        required
+                      />
+                    </div>
+                    <div className={s.divEstado}>
+                      <label htmlFor="estado">Estado</label>
+                      <input
+                        type="text"
+                        id="estado"
+                        value={estado}
+                        onChange={capturaEstado}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label htmlFor="email">E-mail</label>
                 <input
-                  type="datetime-local"
-                  id="fim"
-                  placeholder="Data/Hora fim"
-                  value={dataHoraFim}
-                  onChange={capturaDataHoraFim}
+                  type="email"
+                  id="email"
+                  placeholder="Digite o e-mail de contato"
+                  value={email}
+                  onChange={capturaEmail}
                   required
                 />
               </div>
-            </div>
-            <div className={s.endereco}>
-              <label className={s.labelEndereco} htmlFor="endereço">
-                Endereço
-              </label>
-              <div className={s.dadosEndereco}>
-                <div className={s.rua}>
-                  <div>
-                    <label className={s.labelLogradouro} htmlFor="logradouro">
-                      Logradouro
-                    </label>
-                    <input
-                      className={s.inputLogradouro}
-                      type="text"
-                      id="logradouro"
-                      placeholder="Digite sua rua, avenida..."
-                      value={logradouro}
-                      onChange={capturaLogradouro}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className={s.numeroComplemento}>
-                  <div className={s.divNumero}>
-                    <label htmlFor="numero">Número</label>
-                    <input
-                      className={s.inputNumero}
-                      type="number"
-                      id="numero"
-                      value={numero}
-                      onChange={capturaNumero}
-                      required
-                    />
-                  </div>
-                  <div className={s.divComplemento}>
-                    <label htmlFor="complemento">Complemento</label>
-                    <input
-                      type="text"
-                      id="complemento"
-                      placeholder="Complemento do endereço"
-                      value={complemento}
-                      onChange={capturaComplemento}
-                    />
-                  </div>
-                </div>
-                <div className={s.bairroCidadeEstado}>
-                  <div className={s.divBairro}>
-                    <label htmlFor="bairro">Bairro</label>
-                    <input
-                      type="text"
-                      id="bairro"
-                      placeholder="Digite seu bairro"
-                      value={bairro}
-                      onChange={capturaBairro}
-                      required
-                    />
-                  </div>
-                  <div className={s.divCidade}>
-                    <label htmlFor="cidade">Cidade</label>
-                    <input
-                      type="text"
-                      id="cidade"
-                      placeholder="Digite a cidade"
-                      value={cidade}
-                      onChange={capturaCidade}
-                      required
-                    />
-                  </div>
-                  <div className={s.divEstado}>
-                    <label htmlFor="estado">Estado</label>
-                    <input
-                      type="text"
-                      id="estado"
-                      value={estado}
-                      onChange={capturaEstado}
-                      required
-                    />
-                  </div>
-                </div>
+              <div>
+                <label htmlFor="telefone">Telefone</label>
+                <input
+                  type="tel"
+                  id="telefone"
+                  placeholder="Digite o telefone de contato"
+                  value={formatarTelefone(telefone)}
+                  onChange={capturaTelefone}
+                  required
+                />
               </div>
-            </div>
-            <div>
-              <label htmlFor="email">E-mail</label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Digite seu e-mail"
-                value={email}
-                onChange={capturaEmail}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="telefone">Telefone</label>
-              <input
-                type="tel"
-                id="telefone"
-                placeholder="Digite seu telefone. Apenas números."
-                value={formatarTelefone(telefone)}
-                onChange={capturaTelefone}
-                required
-              />
-            </div>
-            <div className={s.cadastroDivButtom}>
-              <button type="button" onClick={enviarDados}>
-                {preenchendo ? "Salvar alterações" : "Próximo"}
-              </button>
+              <div>
+                <label htmlFor="descricao">Descrição do evento</label>
+                <textarea
+                  className={s.descricao}
+                  type="text"
+                  id="descricao"
+                  placeholder="Descreva o evento"
+                  value={descricao}
+                  onChange={capturaDescricao}
+                  required
+                />
+              </div>
+            </form>
+          )}
 
-              <button className={s.botaoDelete} type="button" disabled>
-                {preenchendo ? "Cancelar" : "Cadastrar"}
+          {abaAtiva === "fotos" && (
+            <div className={s.abaFotos}>
+              <h2>Fotos</h2>
+              <form className={s.formFotos}>
+                <div>
+                  <label htmlFor="fotos">Adicione um arquivo de imagem</label>
+                  <input
+                    className={s.inputFotos}
+                    type="file"
+                    accept="image/*"
+                    id="fotos"
+                    onChange={capturaFoto}
+                    ref={inputFotoRef}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="descricaoFoto">Legenda da foto</label>
+                  <textarea
+                    className={s.inputDescricaoFoto}
+                    type="text"
+                    id="descricaoFoto"
+                    value={descricaoFoto}
+                    placeholder="Adicione uma legenda para foto"
+                    onChange={capturaDescricaoFoto}
+                  />
+                </div>
+              </form>
+              <button type="button" onClick={adicionaFoto}>
+                Adicionar Foto
               </button>
+              <div className={s.listaFoto}>
+                {listaFoto.map((item, index) => (
+                  <div key={index}>
+                    <div className={s.divFotoDescricao}>
+                      <img src={item.foto} alt={item.legenda} />
+                      <p>{item.legenda}</p>
+                    </div>
+                    <div className={s.divBotaoDeleteFoto}>
+                      <button type="button" onClick={() => deletaFoto(index)}>
+                        X
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </form>
+          )}
+
+          {abaAtiva === "atracoes" && (
+            <div className={s.abaDescricao}>
+              <h2>Atrações</h2>
+              <form className={s.formDescricao}>
+                <div>
+                  <label htmlFor="atracao">
+                    Adicione um título para atração
+                  </label>
+                  <input
+                    type="text"
+                    id="atracao"
+                    value={atracao}
+                    placeholder="Digite o título da atração"
+                    onChange={capturaTituloAtracao}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="descricaoAtracao">Descrição da atração</label>
+                  <textarea
+                    className={s.inputDescricaoAtracao}
+                    type="text"
+                    id="descricaoAtracao"
+                    value={descricaoAtracao}
+                    placeholder="Adicione uma descrição para atração"
+                    onChange={capturaDescricaoAtracao}
+                  />
+                </div>
+              </form>
+              <button type="button" onClick={adicionaAtracao}>
+                Adicionar Atração
+              </button>
+              <div className={s.listaAtracao}>
+                {listaAtracao.map((item, index) => (
+                  <div key={index}>
+                    <div className={s.divAtracaoDescricao}>
+                      <h3>{item.atracao}</h3>
+                      <p>{item.atracaoDescricao}</p>
+                    </div>
+                    <div className={s.divBotaoDeleteAtracao}>
+                      <button
+                        type="button"
+                        onClick={() => deletaAtracao(index)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {abaAtiva === "ingressos" && (
+            <div className={s.abaIngresso}>
+              <h2>Ingressos</h2>
+              <form className={s.formIngresso}>
+                <div>
+                  <label htmlFor="ingresso">
+                    Adicione um título para ingresso
+                  </label>
+                  <input
+                    type="text"
+                    id="ingresso"
+                    value={ingresso}
+                    placeholder="Digite o título do ingresso"
+                    onChange={capturaTituloIngresso}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="descricaoIngresso">
+                    Descrição do ingresso
+                  </label>
+                  <textarea
+                    className={s.inputDescricaoIngresso}
+                    type="text"
+                    id="descricaoIngresso"
+                    value={descricaoIngresso}
+                    placeholder="Adicione uma descrição para ingresso"
+                    onChange={capturaDescricaoIngresso}
+                  />
+                </div>
+              </form>
+              <button type="button" onClick={adicionaIngresso}>
+                Adicionar Ingresso
+              </button>
+              <div className={s.listaIngresso}>
+                {listaIngresso.map((item, index) => (
+                  <div key={index}>
+                    <div className={s.divIngressoDescricao}>
+                      <h3>{item.ingresso}</h3>
+                      <p>{item.ingressoDescricao}</p>
+                    </div>
+                    <div className={s.divBotaoDeleteIngresso}>
+                      <button
+                        type="button"
+                        onClick={() => deletaIngresso(index)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {abaAtiva === "promocoes" && (
+            <div className={s.abaPromocao}>
+              <h2>Promoções</h2>
+              <form className={s.formPromocao}>
+                <div>
+                  <label htmlFor="promocao">
+                    Adicione um título para promoção
+                  </label>
+                  <input
+                    type="text"
+                    id="promocao"
+                    value={promocao}
+                    placeholder="Digite o título da promoção"
+                    onChange={capturaTituloPromocao}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="descricaoPromocao">
+                    Descrição da promoção
+                  </label>
+                  <textarea
+                    className={s.inputDescricaoPromocao}
+                    type="text"
+                    id="descricaoPromocao"
+                    value={descricaoPromocao}
+                    placeholder="Adicione uma descrição para promoção"
+                    onChange={capturaDescricaoPromocao}
+                  />
+                </div>
+              </form>
+              <button type="button" onClick={adicionaPromocao}>
+                Adicionar Promoção
+              </button>
+              <div className={s.listaPromocao}>
+                {listaPromocao.map((item, index) => (
+                  <div key={index}>
+                    <div className={s.divPromocaoDescricao}>
+                      <h3>{item.promocao}</h3>
+                      <p>{item.promocaoDescricao}</p>
+                    </div>
+                    <div className={s.divBotaoDeletePromocao}>
+                      <button
+                        type="button"
+                        onClick={() => deletaPromocao(index)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className={s.cadastroDivButtom}>
+            <button type="button" onClick={enviarDados}>
+              {preenchendo ? "Salvar alterações" : "Próximo"}
+            </button>
+
+            <button className={s.botaoDelete} type="button" disabled>
+              {preenchendo ? "Cancelar" : "Cadastrar"}
+            </button>
+          </div>
         </section>
       </div>
     </div>

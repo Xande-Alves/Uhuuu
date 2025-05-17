@@ -123,7 +123,7 @@ const formatarData = (dataString) => {
 };
 
 export default function Tabs() {
-  const [activeTab, setActiveTab] = useState("future");
+  const [activeTab, setActiveTab] = useState("future"); 
 
   // Estado para armazenar os contadores e textos dos botões
   const [eventosState, setEventosState] = useState(
