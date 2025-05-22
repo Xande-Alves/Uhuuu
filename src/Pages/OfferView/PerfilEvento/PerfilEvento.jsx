@@ -1,10 +1,11 @@
 import EventList from "../../../Components/EventList/EventList";
-import s from "./cadastroEvento.module.scss";
-import { useState, useRef } from "react";
+import s from "./perfilEvento.module.scss";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
-export default function CadastroEvento({ loggedUser }) {
+export default function PerfilEvento({ loggedUser }) {
   const [abaAtiva, setAbaAtiva] = useState("Dados Gerais");
+  const [evento, setEvento] = useState(null);
 
   const [nome, setNome] = useState("");
   const [dataHoraInicio, setDataHoraInicio] = useState("");
@@ -32,6 +33,35 @@ export default function CadastroEvento({ loggedUser }) {
   const [descricaoPromocao, setDescricaoPromocao] = useState("");
   const numeroInteresse = 0;
   const idOfertador = loggedUser.id;
+
+  useEffect(() => {
+    const eventoSalvo = localStorage.getItem("eventoSelecionado");
+    if (eventoSalvo) {
+      setEvento(JSON.parse(eventoSalvo));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (evento) {
+      setNome(evento.nome || "");
+      setDataHoraInicio(evento.dataHoraInicio || "");
+      setDataHoraFim(evento.dataHoraFim || "");
+      setLogradouro(evento.logradouro || "");
+      setNumero(evento.numero || "");
+      setComplemento(evento.complemento || "");
+      setBairro(evento.bairro || "");
+      setCidade(evento.cidade || "");
+      setEstado(evento.estado || "");
+      setEmail(evento.email || "");
+      setTelefone(evento.telefone || "");
+      setDescricao(evento.descricao || "");
+      setListaFoto(evento.listaFoto || []);
+      setListaAtracao(evento.listaAtracao || []);
+      setListaIngresso(evento.listaIngresso || []);
+      setListaPromocao(evento.listaPromocao || []);
+      //FALTA NUMERO INTERESSADO
+    }
+  }, [evento]);
 
   const capturaNome = (e) => {
     setNome(e.target.value);
@@ -324,7 +354,7 @@ export default function CadastroEvento({ loggedUser }) {
 
   return (
     <div className={s.cadastroListaEvento}>
-      <EventList loggedUser={loggedUser} />
+      <EventList />
       <div className={s.cadastroContent}>
         <div className={s.divTabButtons}>
           <button
@@ -367,7 +397,7 @@ export default function CadastroEvento({ loggedUser }) {
           </button>
         </div>
         <section className={s.cadastro}>
-          <h1>Cadastro de Eventos</h1>
+          <h1>Perfil de Eventos</h1>
           {abaAtiva === "Dados Gerais" && (
             <form>
               <div>
