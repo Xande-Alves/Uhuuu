@@ -24,6 +24,7 @@ export default function App() {
     const savedUser = localStorage.getItem("loggedUser");
     return savedUser ? JSON.parse(savedUser) : null;
   });
+  const [forcarAtualizacao, setForcarAtualizacao] = useState(false);
 
   useEffect(() => {
     if (loggedUser) {
@@ -32,6 +33,10 @@ export default function App() {
       localStorage.removeItem("loggedUser");
     }
   }, [loggedUser]);
+
+  const atualizarEventos = () => {
+    setForcarAtualizacao((prev) => !prev); // só troca o valor pra forçar re-render
+  };
 
   return (
     <BrowserRouter>
@@ -50,11 +55,17 @@ export default function App() {
         <Route path="CadastroOffer" element={<CadastroOffer />} />
         <Route
           path="CadastroEvento"
-          element={<CadastroEvento loggedUser={loggedUser} />}
+          element={
+            <CadastroEvento
+              loggedUser={loggedUser}
+              onEventoCadastrado={atualizarEventos}
+              atualizar={forcarAtualizacao}
+            />
+          }
         />
         <Route
           path="PerfilEvento"
-          element={<PerfilEvento loggedUser={loggedUser} /> }
+          element={<PerfilEvento loggedUser={loggedUser} />}
         />
         <Route
           path="PerfilSeacher"

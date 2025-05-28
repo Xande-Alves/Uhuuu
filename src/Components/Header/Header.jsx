@@ -372,7 +372,7 @@ export default function Header({ loggedUser, setLoggedUser }) {
     <>
       <header className={s.header}>
         <section className={s.headerLogos}>
-          <Link to="/">
+          <Link to={loggedUser.data_nascimento ? "/" : "/CadastroEvento"}>
             <img
               src={smile}
               className={s.homeSmile}

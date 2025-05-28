@@ -1,6 +1,6 @@
 .cadastroContent {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .cadastro {
@@ -10,7 +10,6 @@
   padding: 20px;
   border-radius: 10px;
   margin: 20px 0 20px 0;
-
 
   h1 {
     text-align: center;
@@ -42,12 +41,12 @@
         opacity: 1;
         transition: opacity 0.3s ease;
       }
-  
+
       input:focus::placeholder {
         opacity: 0;
       }
     }
-    
+
     button {
       padding: 10px 20px;
       background-color: #23023c;
@@ -65,10 +64,10 @@
     }
 
     .cadastroDivButtom {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
@@ -79,7 +78,7 @@
     width: 100%;
 
     label {
-      font-size: .8em;
+      font-size: 0.8em;
       width: 20%;
     }
   }

@@ -19,7 +19,7 @@
 
   .caixaEventos {
     overflow-y: scroll;
-    height: 920px;
+    height: 900px;
 
     .evento {
       display: flex;
@@ -40,6 +40,31 @@
     .evento:hover {
       background-color: #f56358;
     }
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #23023c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: inset 0px 1px 5px #00000059;
+    transition: 0.3s ease;
+    justify-items: center;
+  }
+
+  button:hover {
+    background-color: #f44336;
+  }
+
+  .divButtom {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffe95b;
+    padding: 5px;
   }
 }
 

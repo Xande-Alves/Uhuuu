@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function EventList({ loggedUser }) {
+export default function EventList({ loggedUser, onSelectEvento, atualizar }) {
   const [eventos, setEventos] = useState([]);
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ export default function EventList({ loggedUser }) {
     };
 
     fetchEventos();
-  }, []);
+  }, [atualizar]);
 
   // Filtra os eventos pelo ID do usuário logado
   const eventosFiltrados = loggedUser
@@ -42,7 +42,14 @@ export default function EventList({ loggedUser }) {
       "eventoSelecionado",
       JSON.stringify(eventoSelecionado)
     );
+    if (onSelectEvento) {
+      onSelectEvento(eventoSelecionado);
+    }
     navigate("/PerfilEvento");
+  };
+
+  const novoEvento = () => {
+    navigate("/CadastroEvento");
   };
 
   return (
@@ -50,12 +57,19 @@ export default function EventList({ loggedUser }) {
       <h1>Eventos cadastrados</h1>
       <div className={s.caixaEventos}>
         {eventosFiltrados.map((evento) => (
-          <div key={evento.id} className={s.evento} onClick={() => escolheEvento(evento)}>
+          <div
+            key={evento.id}
+            className={s.evento}
+            onClick={() => escolheEvento(evento)}
+          >
             <h3>{evento.nome}</h3>
             <p>Início: {formatarData(evento.dataHoraInicio)}</p>
             <p>Término: {formatarData(evento.dataHoraFim)}</p>
           </div>
         ))}
+      </div>
+      <div className={s.divButtom}>
+        <button onClick={novoEvento}>Cadastrar novo evento</button>
       </div>
     </div>
   );

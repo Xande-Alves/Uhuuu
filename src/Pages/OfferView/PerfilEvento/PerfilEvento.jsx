@@ -2,10 +2,13 @@ import EventList from "../../../Components/EventList/EventList";
 import s from "./perfilEvento.module.scss";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function PerfilEvento({ loggedUser }) {
   const [abaAtiva, setAbaAtiva] = useState("Dados Gerais");
   const [evento, setEvento] = useState(null);
+  const [editando, setEditando] = useState(false);
+  const navigate = useNavigate();
 
   const [nome, setNome] = useState("");
   const [dataHoraInicio, setDataHoraInicio] = useState("");
@@ -31,7 +34,8 @@ export default function PerfilEvento({ loggedUser }) {
   const [listaPromocao, setListaPromocao] = useState([]);
   const [promocao, setPromocao] = useState("");
   const [descricaoPromocao, setDescricaoPromocao] = useState("");
-  const numeroInteresse = 0;
+  const [numeroInteresse, setNumeroInteresse] = useState(null);
+  const [eventoId, setEventoId] = useState(null);
   const idOfertador = loggedUser.id;
 
   useEffect(() => {
@@ -59,7 +63,8 @@ export default function PerfilEvento({ loggedUser }) {
       setListaAtracao(evento.listaAtracao || []);
       setListaIngresso(evento.listaIngresso || []);
       setListaPromocao(evento.listaPromocao || []);
-      //FALTA NUMERO INTERESSADO
+      setNumeroInteresse(evento.numeroInteresse);
+      setEventoId(evento.id);
     }
   }, [evento]);
 
@@ -275,6 +280,11 @@ export default function PerfilEvento({ loggedUser }) {
 
   const enviarDados = async (e) => {
     if (e) e.preventDefault();
+    if (!editando) {
+      // Ativa modo edição, sem enviar nada
+      setEditando(true);
+      return;
+    }
 
     //VALIDA EMAIL PARA UM FORMATO VÁLIDO
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -304,10 +314,10 @@ export default function PerfilEvento({ loggedUser }) {
       return valor.length === 16 ? valor + ":00" : valor;
     };
 
-    const endPointAPI = "https://api-uhuuu.onrender.com/cadastrar_evento";
+    const endPointAPI = "https://api-uhuuu.onrender.com/atualizar_evento";
 
     const dadosAEnviar = {
-      idOfertador,
+      eventoId,
       nome,
       dataHoraInicio: normalizarData(dataHoraInicio),
       dataHoraFim: normalizarData(dataHoraFim),
@@ -324,37 +334,58 @@ export default function PerfilEvento({ loggedUser }) {
       listaIngresso,
       listaAtracao,
       listaPromocao,
-      numeroInteresse,
     };
 
     try {
-      const resposta = await axios.post(endPointAPI, dadosAEnviar);
-      alert("Evento cadastrado com sucesso!");
-
-      //Limpa os campos após o envio bem-sucedido
-      setNome("");
-      setLogradouro("");
-      setNumero("");
-      setComplemento("");
-      setBairro("");
-      setCidade("");
-      setEstado("");
-      setEmail("");
-      setTelefone("");
-      setDescricao("");
-      setListaFoto([]);
-      setListaIngresso([]);
-      setListaAtracao([]);
-      setListaPromocao([]);
+      const resposta = await axios.put(endPointAPI, dadosAEnviar);
+      alert("Evento atualizado com sucesso!");
+      setEditando(false);
     } catch (erro) {
-      console.error("Erro ao cadastrar evento:", erro);
-      alert("Erro ao cadastrar evento. Verifique os dados e tente novamente.");
+      console.error("Erro ao atualizar evento:", erro);
+      alert("Erro ao atualizar evento. Verifique os dados e tente novamente.");
+    }
+  };
+
+  //DELETAR EVENTO
+  const deletarEvento = async (e) => {
+    e.preventDefault();
+    if (editando) {
+      // Cancela a edição e atualização de dados
+      setEditando(false);
+      return;
+    }
+
+    const confirmacao = confirm(
+      "Tem certeza de que deseja deletar o evento? Esta ação é irreversível!"
+    );
+
+    if (!confirmacao) {
+      return; // Usuário cancelou a exclusão
+    }
+
+    //LOGICA DO DELETE
+    const endPointAPI = "https://api-uhuuu.onrender.com/deletar_evento";
+
+    const dadosAEnviar = { eventoId };
+
+    try {
+      const resposta = await axios.delete(endPointAPI, {
+        data: dadosAEnviar,
+      });
+      alert("Evento excluído com sucesso!");
+      navigate("/CadastroEvento");
+    } catch (erro) {
+      console.error("Erro ao deletar evento:", erro);
+      alert("Erro ao deletar evento.");
     }
   };
 
   return (
     <div className={s.cadastroListaEvento}>
-      <EventList />
+      <EventList
+        loggedUser={loggedUser}
+        onSelectEvento={(eventoSelecionado) => setEvento(eventoSelecionado)}
+      />
       <div className={s.cadastroContent}>
         <div className={s.divTabButtons}>
           <button
@@ -408,6 +439,7 @@ export default function PerfilEvento({ loggedUser }) {
                   placeholder="Digite o nome do evento"
                   value={nome}
                   onChange={capturaNome}
+                  disabled={!editando}
                   required
                 />
               </div>
@@ -420,6 +452,7 @@ export default function PerfilEvento({ loggedUser }) {
                     placeholder="Data/Hora início"
                     value={dataHoraInicio}
                     onChange={capturaDataHoraInicio}
+                    disabled={!editando}
                     required
                   />
                 </div>
@@ -431,6 +464,7 @@ export default function PerfilEvento({ loggedUser }) {
                     placeholder="Data/Hora fim"
                     value={dataHoraFim}
                     onChange={capturaDataHoraFim}
+                    disabled={!editando}
                     required
                   />
                 </div>
@@ -452,6 +486,7 @@ export default function PerfilEvento({ loggedUser }) {
                         placeholder="Digite a rua, avenida..."
                         value={logradouro}
                         onChange={capturaLogradouro}
+                        disabled={!editando}
                         required
                       />
                     </div>
@@ -465,6 +500,7 @@ export default function PerfilEvento({ loggedUser }) {
                         id="numero"
                         value={numero}
                         onChange={capturaNumero}
+                        disabled={!editando}
                         required
                       />
                     </div>
@@ -476,6 +512,7 @@ export default function PerfilEvento({ loggedUser }) {
                         placeholder="Complemento do endereço"
                         value={complemento}
                         onChange={capturaComplemento}
+                        disabled={!editando}
                       />
                     </div>
                   </div>
@@ -488,6 +525,7 @@ export default function PerfilEvento({ loggedUser }) {
                         placeholder="Digite o bairro"
                         value={bairro}
                         onChange={capturaBairro}
+                        disabled={!editando}
                         required
                       />
                     </div>
@@ -499,6 +537,7 @@ export default function PerfilEvento({ loggedUser }) {
                         placeholder="Digite a cidade"
                         value={cidade}
                         onChange={capturaCidade}
+                        disabled={!editando}
                         required
                       />
                     </div>
@@ -509,6 +548,7 @@ export default function PerfilEvento({ loggedUser }) {
                         id="estado"
                         value={estado}
                         onChange={capturaEstado}
+                        disabled={!editando}
                         required
                       />
                     </div>
@@ -523,6 +563,7 @@ export default function PerfilEvento({ loggedUser }) {
                   placeholder="Digite o e-mail de contato"
                   value={email}
                   onChange={capturaEmail}
+                  disabled={!editando}
                   required
                 />
               </div>
@@ -534,6 +575,7 @@ export default function PerfilEvento({ loggedUser }) {
                   placeholder="Digite o telefone de contato"
                   value={formatarTelefone(telefone)}
                   onChange={capturaTelefone}
+                  disabled={!editando}
                   required
                 />
               </div>
@@ -546,6 +588,7 @@ export default function PerfilEvento({ loggedUser }) {
                   placeholder="Descreva o evento"
                   value={descricao}
                   onChange={capturaDescricao}
+                  disabled={!editando}
                   required
                 />
               </div>
@@ -564,6 +607,7 @@ export default function PerfilEvento({ loggedUser }) {
                     accept="image/*"
                     id="fotos"
                     onChange={capturaFoto}
+                    disabled={!editando}
                     ref={inputFotoRef}
                   />
                 </div>
@@ -576,10 +620,18 @@ export default function PerfilEvento({ loggedUser }) {
                     value={descricaoFoto}
                     placeholder="Adicione uma legenda para foto"
                     onChange={capturaDescricaoFoto}
+                    disabled={!editando}
                   />
                 </div>
               </form>
-              <button type="button" onClick={adicionaFoto}>
+              <button
+                type="button"
+                onClick={adicionaFoto}
+                disabled={!editando}
+                className={`${s.botaoAdiciona} ${
+                  editando ? s.ativo : s.inativo
+                }`}
+              >
                 Adicionar Foto
               </button>
               <div className={s.listaFoto}>
@@ -614,6 +666,7 @@ export default function PerfilEvento({ loggedUser }) {
                     value={atracao}
                     placeholder="Digite o título da atração"
                     onChange={capturaTituloAtracao}
+                    disabled={!editando}
                   />
                 </div>
                 <div>
@@ -625,10 +678,18 @@ export default function PerfilEvento({ loggedUser }) {
                     value={descricaoAtracao}
                     placeholder="Adicione uma descrição para atração"
                     onChange={capturaDescricaoAtracao}
+                    disabled={!editando}
                   />
                 </div>
               </form>
-              <button type="button" onClick={adicionaAtracao}>
+              <button
+                type="button"
+                onClick={adicionaAtracao}
+                disabled={!editando}
+                className={`${s.botaoAdiciona} ${
+                  editando ? s.ativo : s.inativo
+                }`}
+              >
                 Adicionar Atração
               </button>
               <div className={s.listaAtracao}>
@@ -666,6 +727,7 @@ export default function PerfilEvento({ loggedUser }) {
                     value={ingresso}
                     placeholder="Digite o título do ingresso"
                     onChange={capturaTituloIngresso}
+                    disabled={!editando}
                   />
                 </div>
                 <div>
@@ -679,10 +741,18 @@ export default function PerfilEvento({ loggedUser }) {
                     value={descricaoIngresso}
                     placeholder="Adicione uma descrição para ingresso"
                     onChange={capturaDescricaoIngresso}
+                    disabled={!editando}
                   />
                 </div>
               </form>
-              <button type="button" onClick={adicionaIngresso}>
+              <button
+                type="button"
+                onClick={adicionaIngresso}
+                disabled={!editando}
+                className={`${s.botaoAdiciona} ${
+                  editando ? s.ativo : s.inativo
+                }`}
+              >
                 Adicionar Ingresso
               </button>
               <div className={s.listaIngresso}>
@@ -720,6 +790,7 @@ export default function PerfilEvento({ loggedUser }) {
                     value={promocao}
                     placeholder="Digite o título da promoção"
                     onChange={capturaTituloPromocao}
+                    disabled={!editando}
                   />
                 </div>
                 <div>
@@ -733,10 +804,18 @@ export default function PerfilEvento({ loggedUser }) {
                     value={descricaoPromocao}
                     placeholder="Adicione uma descrição para promoção"
                     onChange={capturaDescricaoPromocao}
+                    disabled={!editando}
                   />
                 </div>
               </form>
-              <button type="button" onClick={adicionaPromocao}>
+              <button
+                type="button"
+                onClick={adicionaPromocao}
+                disabled={!editando}
+                className={`${s.botaoAdiciona} ${
+                  editando ? s.ativo : s.inativo
+                }`}
+              >
                 Adicionar Promoção
               </button>
               <div className={s.listaPromocao}>
@@ -771,8 +850,27 @@ export default function PerfilEvento({ loggedUser }) {
               Anterior
             </button>
 
-            <button type="button" onClick={botao2}>
+            <button
+              type="button"
+              style={{
+                visibility: abaAtiva === "promocoes" ? "hidden" : "visible",
+              }}
+              onClick={botao2}
+            >
               {abaAtiva === "promocoes" ? "Cadastrar Evento" : "Próximo"}
+            </button>
+          </div>
+          <div className={s.cadastroDivButtom}>
+            <button type="button" onClick={enviarDados}>
+              {editando ? "Salvar alterações" : "Alterar dados"}
+            </button>
+
+            <button
+              className={s.botaoDelete}
+              type="button"
+              onClick={deletarEvento}
+            >
+              {editando ? "Cancelar" : "Excluir Evento"}
             </button>
           </div>
         </section>

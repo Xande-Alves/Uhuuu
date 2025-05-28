@@ -3,7 +3,11 @@ import s from "./cadastroEvento.module.scss";
 import { useState, useRef } from "react";
 import axios from "axios";
 
-export default function CadastroEvento({ loggedUser }) {
+export default function CadastroEvento({
+  loggedUser,
+  onEventoCadastrado,
+  atualizar,
+}) {
   const [abaAtiva, setAbaAtiva] = useState("Dados Gerais");
 
   const [nome, setNome] = useState("");
@@ -316,6 +320,12 @@ export default function CadastroEvento({ loggedUser }) {
       setListaIngresso([]);
       setListaAtracao([]);
       setListaPromocao([]);
+
+      setAbaAtiva("Dados Gerais");
+
+      if (onEventoCadastrado) {
+        onEventoCadastrado(); // << Aqui notifica o pai
+      }
     } catch (erro) {
       console.error("Erro ao cadastrar evento:", erro);
       alert("Erro ao cadastrar evento. Verifique os dados e tente novamente.");
@@ -324,7 +334,7 @@ export default function CadastroEvento({ loggedUser }) {
 
   return (
     <div className={s.cadastroListaEvento}>
-      <EventList loggedUser={loggedUser} />
+      <EventList loggedUser={loggedUser} atualizar={atualizar} />
       <div className={s.cadastroContent}>
         <div className={s.divTabButtons}>
           <button
