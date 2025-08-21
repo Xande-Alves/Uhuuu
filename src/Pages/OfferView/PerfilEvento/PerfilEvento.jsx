@@ -9,6 +9,7 @@ export default function PerfilEvento({ loggedUser }) {
   const [evento, setEvento] = useState(null);
   const [editando, setEditando] = useState(false);
   const navigate = useNavigate();
+  const [refreshEventList, setRefreshEventList] = useState(false);
 
   const [nome, setNome] = useState("");
   const [dataHoraInicio, setDataHoraInicio] = useState("");
@@ -339,7 +340,9 @@ export default function PerfilEvento({ loggedUser }) {
     try {
       const resposta = await axios.put(endPointAPI, dadosAEnviar);
       alert("Evento atualizado com sucesso!");
+
       setEditando(false);
+      setRefreshEventList((prev) => !prev); // Isso força o useEffect do EventList a disparar novamente
     } catch (erro) {
       console.error("Erro ao atualizar evento:", erro);
       alert("Erro ao atualizar evento. Verifique os dados e tente novamente.");
@@ -385,6 +388,7 @@ export default function PerfilEvento({ loggedUser }) {
       <EventList
         loggedUser={loggedUser}
         onSelectEvento={(eventoSelecionado) => setEvento(eventoSelecionado)}
+        atualizar={refreshEventList}
       />
       <div className={s.cadastroContent}>
         <div className={s.divTabButtons}>

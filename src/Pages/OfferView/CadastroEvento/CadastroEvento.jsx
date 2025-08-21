@@ -3,6 +3,352 @@ import s from "./cadastroEvento.module.scss";
 import { useState, useRef } from "react";
 import axios from "axios";
 
+const estadosBrasil = [
+  { sigla: "AC", nome: "Acre" },
+  { sigla: "AL", nome: "Alagoas" },
+  { sigla: "AP", nome: "Amapá" },
+  { sigla: "AM", nome: "Amazonas" },
+  { sigla: "BA", nome: "Bahia" },
+  { sigla: "CE", nome: "Ceará" },
+  { sigla: "DF", nome: "Distrito Federal" },
+  { sigla: "ES", nome: "Espírito Santo" },
+  { sigla: "GO", nome: "Goiás" },
+  { sigla: "MA", nome: "Maranhão" },
+  { sigla: "MT", nome: "Mato Grosso" },
+  { sigla: "MS", nome: "Mato Grosso do Sul" },
+  { sigla: "MG", nome: "Minas Gerais" },
+  { sigla: "PA", nome: "Pará" },
+  { sigla: "PB", nome: "Paraíba" },
+  { sigla: "PR", nome: "Paraná" },
+  { sigla: "PE", nome: "Pernambuco" },
+  { sigla: "PI", nome: "Piauí" },
+  { sigla: "RJ", nome: "Rio de Janeiro" },
+  { sigla: "RN", nome: "Rio Grande do Norte" },
+  { sigla: "RS", nome: "Rio Grande do Sul" },
+  { sigla: "RO", nome: "Rondônia" },
+  { sigla: "RR", nome: "Roraima" },
+  { sigla: "SC", nome: "Santa Catarina" },
+  { sigla: "SP", nome: "São Paulo" },
+  { sigla: "SE", nome: "Sergipe" },
+  { sigla: "TO", nome: "Tocantins" },
+];
+
+const cidadesPorEstado = {
+  AC: [
+    "Rio Branco",
+    "Cruzeiro do Sul",
+    "Sena Madureira",
+    "Tarauacá",
+    "Feijó",
+    "Brasiléia",
+    "Senador Guiomard",
+    "Plácido de Castro",
+    "Xapuri",
+    "Marechal Thaumaturgo",
+  ],
+  AL: [
+    "Maceió",
+    "Arapiraca",
+    "Rio Largo",
+    "Palmeira dos Índios",
+    "União dos Palmares",
+    "Penedo",
+    "São Miguel dos Campos",
+    "Campo Alegre",
+    "Delmiro Gouveia",
+    "Coruripe",
+  ],
+  AM: [
+    "Manaus",
+    "Parintins",
+    "Itacoatiara",
+    "Manacapuru",
+    "Coari",
+    "Tabatinga",
+    "Maués",
+    "Tefé",
+    "Humaitá",
+    "Iranduba",
+  ],
+  AP: [
+    "Macapá",
+    "Santana",
+    "Laranjal do Jari",
+    "Oiapoque",
+    "Mazagão",
+    "Porto Grande",
+    "Tartarugalzinho",
+    "Pedra Branca do Amapari",
+    "Vitória do Jari",
+    "Calçoene",
+  ],
+  BA: [
+    "Salvador",
+    "Feira de Santana",
+    "Vitória da Conquista",
+    "Camaçari",
+    "Itabuna",
+    "Juazeiro",
+    "Lauro de Freitas",
+    "Ilhéus",
+    "Jequié",
+    "Teixeira de Freitas",
+  ],
+  CE: [
+    "Fortaleza",
+    "Caucaia",
+    "Juazeiro do Norte",
+    "Maracanaú",
+    "Sobral",
+    "Crato",
+    "Itapipoca",
+    "Maranguape",
+    "Quixadá",
+    "Aquiraz",
+  ],
+  DF: ["Brasília"],
+  ES: [
+    "Serra",
+    "Vila Velha",
+    "Cariacica",
+    "Vitória",
+    "Cachoeiro de Itapemirim",
+    "Linhares",
+    "Colatina",
+    "São Mateus",
+    "Guarapari",
+    "Aracruz",
+  ],
+  GO: [
+    "Goiânia",
+    "Aparecida de Goiânia",
+    "Anápolis",
+    "Rio Verde",
+    "Luziânia",
+    "Águas Lindas de Goiás",
+    "Valparaíso de Goiás",
+    "Trindade",
+    "Formosa",
+    "Novo Gama",
+  ],
+  MA: [
+    "São Luís",
+    "Imperatriz",
+    "São José de Ribamar",
+    "Timon",
+    "Caxias",
+    "Codó",
+    "Paço do Lumiar",
+    "Açailândia",
+    "Bacabal",
+    "Balsas",
+  ],
+  MG: [
+    "Belo Horizonte",
+    "Uberlândia",
+    "Contagem",
+    "Juiz de Fora",
+    "Betim",
+    "Montes Claros",
+    "Ribeirão das Neves",
+    "Uberaba",
+    "Governador Valadares",
+    "Ipatinga",
+  ],
+  MS: [
+    "Campo Grande",
+    "Dourados",
+    "Três Lagoas",
+    "Corumbá",
+    "Ponta Porã",
+    "Naviraí",
+    "Nova Andradina",
+    "Paranaíba",
+    "Aquidauana",
+    "Sidrolândia",
+  ],
+  MT: [
+    "Cuiabá",
+    "Várzea Grande",
+    "Rondonópolis",
+    "Sinop",
+    "Tangará da Serra",
+    "Sorriso",
+    "Lucas do Rio Verde",
+    "Primavera do Leste",
+    "Cáceres",
+    "Barra do Garças",
+  ],
+  PA: [
+    "Belém",
+    "Ananindeua",
+    "Santarém",
+    "Marabá",
+    "Parauapebas",
+    "Castanhal",
+    "Abaetetuba",
+    "Cametá",
+    "Tucuruí",
+    "Bragança",
+  ],
+  PB: [
+    "João Pessoa",
+    "Campina Grande",
+    "Santa Rita",
+    "Patos",
+    "Bayeux",
+    "Sousa",
+    "Cajazeiras",
+    "Guarabira",
+    "Sapé",
+    "Mamanguape",
+  ],
+  PE: [
+    "Recife",
+    "Jaboatão dos Guararapes",
+    "Olinda",
+    "Caruaru",
+    "Petrolina",
+    "Paulista",
+    "Cabo de Santo Agostinho",
+    "Camaragibe",
+    "Garanhuns",
+    "Vitória de Santo Antão",
+  ],
+  PI: [
+    "Teresina",
+    "Parnaíba",
+    "Picos",
+    "Piripiri",
+    "Floriano",
+    "Campo Maior",
+    "Barras",
+    "União",
+    "Altos",
+    "Esperantina",
+  ],
+  PR: [
+    "Curitiba",
+    "Londrina",
+    "Maringá",
+    "Ponta Grossa",
+    "Cascavel",
+    "São José dos Pinhais",
+    "Foz do Iguaçu",
+    "Colombo",
+    "Guarapuava",
+    "Paranaguá",
+  ],
+  RJ: [
+    "Rio de Janeiro",
+    "São Gonçalo",
+    "Duque de Caxias",
+    "Nova Iguaçu",
+    "Niterói",
+    "Belford Roxo",
+    "Campos dos Goytacazes",
+    "São João de Meriti",
+    "Petrópolis",
+    "Volta Redonda",
+  ],
+  RN: [
+    "Natal",
+    "Mossoró",
+    "Parnamirim",
+    "São Gonçalo do Amarante",
+    "Macaíba",
+    "Ceará-Mirim",
+    "Caicó",
+    "Assu",
+    "Currais Novos",
+    "Santa Cruz",
+  ],
+  RO: [
+    "Porto Velho",
+    "Ji-Paraná",
+    "Ariquemes",
+    "Vilhena",
+    "Cacoal",
+    "Rolim de Moura",
+    "Guajará-Mirim",
+    "Jaru",
+    "Pimenta Bueno",
+    "Buritis",
+  ],
+  RR: [
+    "Boa Vista",
+    "Rorainópolis",
+    "Caracaraí",
+    "Alto Alegre",
+    "Mucajaí",
+    "Cantá",
+    "Pacaraima",
+    "Bonfim",
+    "São Luiz",
+    "Amajari",
+  ],
+  RS: [
+    "Porto Alegre",
+    "Caxias do Sul",
+    "Pelotas",
+    "Canoas",
+    "Santa Maria",
+    "Gravataí",
+    "Viamão",
+    "Novo Hamburgo",
+    "São Leopoldo",
+    "Rio Grande",
+  ],
+  SC: [
+    "Joinville",
+    "Florianópolis",
+    "Blumenau",
+    "São José",
+    "Chapecó",
+    "Itajaí",
+    "Criciúma",
+    "Jaraguá do Sul",
+    "Lages",
+    "Balneário Camboriú",
+  ],
+  SE: [
+    "Aracaju",
+    "Nossa Senhora do Socorro",
+    "Lagarto",
+    "Itabaiana",
+    "São Cristóvão",
+    "Estância",
+    "Tobias Barreto",
+    "Simão Dias",
+    "Nossa Senhora da Glória",
+    "Propriá",
+  ],
+  SP: [
+    "São Paulo",
+    "Guarulhos",
+    "Campinas",
+    "São Bernardo do Campo",
+    "Santo André",
+    "Osasco",
+    "São José dos Campos",
+    "Ribeirão Preto",
+    "Sorocaba",
+    "Mauá",
+  ],
+  TO: [
+    "Palmas",
+    "Araguaína",
+    "Gurupi",
+    "Porto Nacional",
+    "Paraíso do Tocantins",
+    "Colinas do Tocantins",
+    "Guaraí",
+    "Formoso do Araguaia",
+    "Tocantinópolis",
+    "Augustinópolis",
+  ],
+};
+
 export default function CadastroEvento({
   loggedUser,
   onEventoCadastrado,
@@ -67,6 +413,8 @@ export default function CadastroEvento({
   };
   const capturaEstado = (e) => {
     setEstado(e.target.value);
+    const estadoEcolhido = e.target.value;
+    setCidade(""); // limpa cidade ao trocar estado
   };
   const capturaEmail = (e) => {
     setEmail(e.target.value.toLowerCase());
@@ -110,6 +458,9 @@ export default function CadastroEvento({
   const capturaDescricaoPromocao = (e) => {
     setDescricaoPromocao(e.target.value);
   };
+
+  //PARA SELECT DOS ESTADOS E CIDADES
+  const cidadesDisponiveis = cidadesPorEstado[estado] || [];
 
   //LOGICA DE FORMAÇÃO DA LISTA DE FOTOS
   const inputFotoRef = useRef(null); //PARA LIMPAR O NOME DO ARQUIVO DO INPUT FOTO
@@ -471,26 +822,42 @@ export default function CadastroEvento({
                         required
                       />
                     </div>
-                    <div className={s.divCidade}>
-                      <label htmlFor="cidade">Cidade</label>
-                      <input
-                        type="text"
-                        id="cidade"
-                        placeholder="Digite a cidade"
-                        value={cidade}
-                        onChange={capturaCidade}
-                        required
-                      />
-                    </div>
                     <div className={s.divEstado}>
                       <label htmlFor="estado">Estado</label>
-                      <input
-                        type="text"
+                      <select
                         id="estado"
                         value={estado}
                         onChange={capturaEstado}
-                        required
-                      />
+                        className={!estado ? s.placeholder : ""}
+                      >
+                        <option value="" disabled hidden>
+                          Escolha um estado
+                        </option>
+                        {estadosBrasil.map((estado) => (
+                          <option key={estado.sigla} value={estado.sigla}>
+                            {estado.nome}
+                          </option>
+                        ))}
+                      </select>
+
+                      <div className={s.divCidade}>
+                        <label htmlFor="cidade">Cidade</label>
+                        <select
+                          id="cidade"
+                          value={cidade}
+                          onChange={capturaCidade}
+                          disabled={!estado}
+                        >
+                          <option value="" disabled hidden>
+                            Escolha uma cidade
+                          </option>
+                          {cidadesDisponiveis.map((cidade) => (
+                            <option key={cidade} value={cidade}>
+                              {cidade}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>

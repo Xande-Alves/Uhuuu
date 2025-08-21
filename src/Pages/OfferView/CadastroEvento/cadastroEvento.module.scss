@@ -147,17 +147,37 @@
             width: 87%;
             margin: 0;
 
+            .divBairro {
+              width: 30%;
+            }
+
             .divEstado {
-              width: 60%;
+              width: 70%;
               margin-left: 20px;
 
-              input {
+              select {
+                margin-left: 10px;
                 width: 50%;
+                height: 40px;
+                border-radius: 10px;
+                padding-left: 18px;
+              }
+
+              .placeholder {
+                color: #888; // tom de cinza claro
               }
             }
 
             .divCidade {
               margin-left: 20px;
+
+              select {
+                width: 75%;
+                margin-left: 10px;
+                height: 40px;
+                border-radius: 10px;
+                padding-left: 18px;
+              }
             }
           }
         }

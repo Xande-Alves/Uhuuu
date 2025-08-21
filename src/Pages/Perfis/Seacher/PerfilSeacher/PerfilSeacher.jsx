@@ -2,21 +2,24 @@ import s from "./perfilSeacher.module.scss";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import semFotoPerfil from "../../../../assets/PerfilSft.jpg";
 
 export default function PerfilSeacher({ loggedUser, setLoggedUser }) {
   const [editando, setEditando] = useState(false);
   const navigate = useNavigate();
 
+  const [fotoPerfil, setFotoPerfil] = useState(semFotoPerfil);
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [data_nascimento, setData_nascimento] = useState("");
   const [email, setEmail] = useState(loggedUser.email);
   const [telefone, setTelefone] = useState("");
   const [senha, setSenha] = useState("");
-  const [confirmaSenha, setConfirmaSenha] = useState(""); 
+  const [confirmaSenha, setConfirmaSenha] = useState("");
 
   useEffect(() => {
     if (loggedUser) {
+      setFotoPerfil(loggedUser.fotoPerfil || "");
       setNome(loggedUser.nome || "");
       setSobrenome(loggedUser.sobrenome || "");
       setData_nascimento(loggedUser.data_nascimento || "");
@@ -25,6 +28,16 @@ export default function PerfilSeacher({ loggedUser, setLoggedUser }) {
     }
   }, [loggedUser]);
 
+  const capturaFoto = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFotoPerfil(reader.result); // base64 da imagem
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const capturaNome = (e) => setNome(e.target.value);
   const capturaSobrenome = (e) => setSobrenome(e.target.value);
   const capturaDataNascimento = (e) => setData_nascimento(e.target.value);
@@ -126,6 +139,7 @@ export default function PerfilSeacher({ loggedUser, setLoggedUser }) {
     const endPointAPI = "https://api-uhuuu.onrender.com/atualizar_seacher";
 
     const dadosAEnviar = {
+      fotoPerfil,
       nome,
       sobrenome,
       data_nascimento,
@@ -141,14 +155,15 @@ export default function PerfilSeacher({ loggedUser, setLoggedUser }) {
       const resposta = await axios.put(endPointAPI, dadosAEnviar);
       alert("Dados atualizados com sucesso!");
 
-      // Limpa os campos após o envio bem-sucedido, deixando apenas os campos de senha em branco
-      setNome(nome);
-      setSobrenome(sobrenome);
-      setData_nascimento(data_nascimento);
-      setTelefone(telefone);
+      // Atualiza o loggedUser com os novos dados
+      setLoggedUser((prev) => ({
+        ...prev,
+        ...dadosAEnviar,
+      }));
+
+      // Limpa apenas as senhas
       setSenha("");
       setConfirmaSenha("");
-
       setEditando(false);
     } catch (erro) {
       console.error("Erro ao atualizar usuário buscador:", erro);
@@ -199,6 +214,22 @@ export default function PerfilSeacher({ loggedUser, setLoggedUser }) {
         <section className={s.cadastro}>
           <h1>Dados do Perfil</h1>
           <form>
+            <div className={s.divFotoPerfil}>
+              <div className={s.fotoPerfil}>
+                <label htmlFor="fotoPerfil">Foto do perfil</label>
+                <input
+                  className={s.inputFotos}
+                  type="file"
+                  accept="image/*"
+                  id="fotoPerfil"
+                  onChange={capturaFoto}
+                  disabled={!editando}
+                />
+              </div>
+              <div className={s.foto}>
+                <img src={fotoPerfil} alt="Foto do perfil do usuário." />
+              </div>
+            </div>
             <div>
               <label className={s.labelCadastro} htmlFor="nome">
                 Nome

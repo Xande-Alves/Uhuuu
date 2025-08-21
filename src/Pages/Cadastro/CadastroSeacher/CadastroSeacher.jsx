@@ -2,10 +2,12 @@ import s from "./cadastroSeacher.module.scss";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import semFotoPerfil from "../../../assets/PerfilSft.jpg";
 
 export default function CadastroSeacher() {
   const navigate = useNavigate();
 
+  const [fotoPerfil, setFotoPerfil] = useState(semFotoPerfil);
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [data_nascimento, setData_nascimento] = useState("");
@@ -14,6 +16,16 @@ export default function CadastroSeacher() {
   const [senha, setSenha] = useState("");
   const [confirmaSenha, setConfirmaSenha] = useState("");
 
+  const capturaFoto = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFotoPerfil(reader.result); // base64 da imagem
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const capturaNome = (e) => {
     setNome(e.target.value);
   };
@@ -70,7 +82,6 @@ export default function CadastroSeacher() {
 
     fetchSeachers();
   }, []);
-
 
   const enviarDados = async (e) => {
     e.preventDefault();
@@ -153,6 +164,7 @@ export default function CadastroSeacher() {
     const endPointAPI = "https://api-uhuuu.onrender.com/cadastrar_seacher";
 
     const dadosAEnviar = {
+      fotoPerfil,
       nome,
       sobrenome,
       data_nascimento,
@@ -187,6 +199,21 @@ export default function CadastroSeacher() {
         <section className={s.cadastro}>
           <h1>Cadastro de buscadores</h1>
           <form>
+            <div className={s.divFotoPerfil}>
+              <div className={s.fotoPerfil}>
+                <label htmlFor="fotoPerfil">Foto do perfil</label>
+                <input
+                  className={s.inputFotos}
+                  type="file"
+                  accept="image/*"
+                  id="fotoPerfil"
+                  onChange={capturaFoto}
+                />
+              </div>
+              <div className={s.foto}>
+                <img src={fotoPerfil} alt="Foto do perfil do usuário." />
+              </div>
+            </div>
             <div>
               <label className={s.labelCadastro} htmlFor="nome">
                 Nome

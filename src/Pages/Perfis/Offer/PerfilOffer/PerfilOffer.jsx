@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function PerfilOffer({ loggedUser, setLoggedUser }) { 
+export default function PerfilOffer({ loggedUser, setLoggedUser }) {
   const [editando, setEditando] = useState(false);
   const navigate = useNavigate();
 
@@ -89,16 +89,6 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
       return;
     }
 
-    //CERTIFICA A NÃO EXISTENCIA DE NUMEROS E CARACTERES ESPECIAIS NO NOME
-    for (const caractere of nome) {
-      if (!/[a-zA-Z]/.test(caractere)) {
-        alert(
-          "O campo nome não deve possuir números ou caracteres especiais. Por favor, tente novamente."
-        );
-        return;
-      }
-    }
-
     //VALIDA EMAIL PARA UM FORMATO VÁLIDO
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -129,14 +119,14 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
 
     const dadosAEnviar = {
       nome,
-      logradouro, 
+      logradouro,
       numero,
       complemento,
       bairro,
       cidade,
       estado,
       email,
-      telefone
+      telefone,
     };
 
     if (senha != "") {
@@ -147,19 +137,15 @@ export default function PerfilOffer({ loggedUser, setLoggedUser }) {
       const resposta = await axios.put(endPointAPI, dadosAEnviar);
       alert("Dados atualizados com sucesso!");
 
-      // Limpa os campos após o envio bem-sucedido, deixando apenas os campos de senha em branco
-      setNome(nome);
-      setLogradouro(logradouro);
-      setNumero(numero);
-      setComplemento(complemento);
-      setBairro(bairro);
-      setCidade(cidade);
-      setEstado(estado);
-      setEmail(email);
-      setTelefone(telefone);
+      // Atualiza o loggedUser com os novos dados
+      setLoggedUser((prev) => ({
+        ...prev,
+        ...dadosAEnviar,
+      }));
+
+      // Limpa apenas as senhas
       setSenha("");
       setConfirmaSenha("");
-
       setEditando(false);
     } catch (erro) {
       console.error("Erro ao atualizar usuário ofertador:", erro);

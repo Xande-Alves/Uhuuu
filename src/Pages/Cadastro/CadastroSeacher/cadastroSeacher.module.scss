@@ -47,6 +47,33 @@
       }
     }
 
+    .divFotoPerfil {
+      .fotoPerfil {
+        width: 56%;
+
+        .inputFotos {
+          width: auto;
+          height: auto;
+          border-radius: 0;
+          border: none;
+          padding: 0;
+        }
+      }
+
+      .foto {
+        border: solid 1px rgba(0, 0, 0, 0.664);
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 10px;
+        }
+      }
+    }
+
     button {
       padding: 10px 20px;
       background-color: #23023c;

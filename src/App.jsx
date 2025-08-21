@@ -18,6 +18,7 @@ import PerfilSeacher from "./Pages/Perfis/Seacher/PerfilSeacher/PerfilSeacher";
 import PerfilOffer from "./Pages/Perfis/Offer/PerfilOffer/PerfilOffer";
 import CadastroEvento from "./Pages/OfferView/CadastroEvento/CadastroEvento";
 import PerfilEvento from "./Pages/OfferView/PerfilEvento/PerfilEvento";
+import Cidades from "./Pages/Cidades/Cidades";
 
 export default function App() {
   const [loggedUser, setLoggedUser] = useState(() => {
@@ -43,6 +44,7 @@ export default function App() {
       <Header loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="Cidades" element={<Cidades />} />
         <Route path="Recife" element={<Recife />} />
         <Route path="Olinda" element={<Olinda />} />
         <Route path="Paulista" element={<Paulista />} />

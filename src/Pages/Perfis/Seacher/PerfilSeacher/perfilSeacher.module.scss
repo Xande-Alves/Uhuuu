@@ -1,6 +1,6 @@
 .cadastroContent {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .cadastro {
@@ -10,7 +10,6 @@
   padding: 20px;
   border-radius: 10px;
   margin: 20px 0 20px 0;
-
 
   h1 {
     text-align: center;
@@ -45,12 +44,39 @@
         opacity: 1;
         transition: opacity 0.3s ease;
       }
-  
+
       input:focus::placeholder {
         opacity: 0;
       }
     }
-    
+
+    .divFotoPerfil {
+      .fotoPerfil {
+        width: 56%;
+
+        .inputFotos {
+          width: auto;
+          height: auto;
+          border-radius: 0;
+          border: none;
+          padding: 0;
+        }
+      }
+
+      .foto {
+        border: solid 1px rgba(0, 0, 0, 0.664);
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 10px;
+        }
+      }
+    }
+
     button {
       padding: 10px 20px;
       background-color: #23023c;
@@ -68,18 +94,18 @@
     }
 
     .cadastroDivButtom {
-        width: 70%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      width: 70%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-        .botaoDelete {
-          background-color: #f44336;
-        }
+      .botaoDelete {
+        background-color: #f44336;
+      }
 
-        .botaoDelete:hover {
-          background-color: #912821;
-        }
+      .botaoDelete:hover {
+        background-color: #912821;
+      }
     }
   }
 }
@@ -90,7 +116,7 @@
     width: 100%;
 
     label {
-      font-size: .8em;
+      font-size: 0.8em;
       width: 20%;
     }
   }
