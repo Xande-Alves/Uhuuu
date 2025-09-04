@@ -19,6 +19,8 @@ import PerfilOffer from "./Pages/Perfis/Offer/PerfilOffer/PerfilOffer";
 import CadastroEvento from "./Pages/OfferView/CadastroEvento/CadastroEvento";
 import PerfilEvento from "./Pages/OfferView/PerfilEvento/PerfilEvento";
 import Cidades from "./Pages/Cidades/Cidades";
+import SearcherEventView from "./Pages/SearcherView/Events/SearcherEventView";
+import Tabs from "./Components/Tabs/Tabs";
 
 export default function App() {
   const [loggedUser, setLoggedUser] = useState(() => {
@@ -43,8 +45,8 @@ export default function App() {
     <BrowserRouter>
       <Header loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="Cidades" element={<Cidades />} />
+        <Route path="/" element={<Home loggedUser={loggedUser} />} />
+        <Route path="Cidades" element={<Cidades loggedUser={loggedUser} />} />
         <Route path="Recife" element={<Recife />} />
         <Route path="Olinda" element={<Olinda />} />
         <Route path="Paulista" element={<Paulista />} />
@@ -55,6 +57,7 @@ export default function App() {
         <Route path="SeusRoles" element={<SeusRoles />} />
         <Route path="CadastroSeacher" element={<CadastroSeacher />} />
         <Route path="CadastroOffer" element={<CadastroOffer />} />
+        <Route path="SearcherEventView/:id" element={<SearcherEventView />} />
         <Route
           path="CadastroEvento"
           element={
