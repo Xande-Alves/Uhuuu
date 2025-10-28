@@ -2,9 +2,6 @@ import "./globalReset/globalReset.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "./Pages/Home/Home";
-import Recife from "./Pages/Cidades/Recife/Recife";
-import Olinda from "./Pages/Cidades/Olinda/Olinda";
-import Paulista from "./Pages/Cidades/Paulista/Paulista";
 import PesquisaGeral from "./Pages/PesquisaGeral/PesquisaGeral";
 import BuscaCompleta from "./Pages/BuscaCompleta/BuscaCompleta";
 import PertoDeVoce from "./Pages/PertoDeVoce/PertoDeVoce";
@@ -47,9 +44,6 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home loggedUser={loggedUser} />} />
         <Route path="Cidades" element={<Cidades loggedUser={loggedUser} />} />
-        <Route path="Recife" element={<Recife />} />
-        <Route path="Olinda" element={<Olinda />} />
-        <Route path="Paulista" element={<Paulista />} />
         <Route path="PesquisaGeral" element={<PesquisaGeral />} />
         <Route path="BuscaCompleta" element={<BuscaCompleta />} />
         <Route path="PertoDeVoce" element={<PertoDeVoce />} />
@@ -57,7 +51,7 @@ export default function App() {
         <Route path="SeusRoles" element={<SeusRoles />} />
         <Route path="CadastroSeacher" element={<CadastroSeacher />} />
         <Route path="CadastroOffer" element={<CadastroOffer />} />
-        <Route path="SearcherEventView/:id" element={<SearcherEventView />} />
+        <Route path="SearcherEventView/:id" element={<SearcherEventView loggedUser={loggedUser} />} />
         <Route
           path="CadastroEvento"
           element={

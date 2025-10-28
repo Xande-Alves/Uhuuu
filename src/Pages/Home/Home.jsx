@@ -4,7 +4,7 @@ import SideNavbar from "../../Components/SideNavbar/SideNavbar";
 import Tabs from "../../Components/Tabs/Tabs";
 import s from "./home.module.scss";
 
-export default function Home(loggedUser) {
+export default function Home({ loggedUser }) {
   return (
     <>
       <div className={s.sideNavCaroussel}>
@@ -22,7 +22,7 @@ export default function Home(loggedUser) {
         </main>
       </div>
       <div className={s.chatTabs}>
-        <Chat />
+        <Chat loggedUser={loggedUser} />
         <Tabs loggedUser={loggedUser} />
       </div>
     </>

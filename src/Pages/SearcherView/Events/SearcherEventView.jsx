@@ -2,12 +2,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import s from "./searcherEventView.module.scss";
-import SideNavbar from "../../../Components/SideNavbar/SideNavbar";
+import SideNavbar from "../../../Components/SideNavbar/SideNavbar"; 
 import Chat from "../../../Components/Chat/Chat";
 
-export default function SearcherEventView() {
+export default function SearcherEventView({loggedUser}) {
   const { id } = useParams();
-  const navigate = useNavigate(); // hook para navegação
+  const navigate = useNavigate(); // hook para navegação 
   const [evento, setEvento] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,7 +54,7 @@ export default function SearcherEventView() {
     <div className={s.searcherEvent}>
       <div>
         <SideNavbar />
-        <Chat />
+        <Chat loggedUser={loggedUser} />
       </div>
       <div className={s.dataEvent}>
         <button
