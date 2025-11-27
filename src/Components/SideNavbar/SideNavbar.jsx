@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function SideNavbar() {
     return (
         <section className={s.sideNavbar}>
-            <h1>Vamos encontrar o seu rolê?</h1> 
+            <h1>Vamos encontrar o seu rolê?</h1>  
             <nav>
                 <ul>
                     <li><Link className={s.linkSidenav} to='/BuscaCompleta'>Busca Completa</Link></li>

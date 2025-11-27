@@ -1,6 +1,6 @@
 .cadastroContent {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .cadastro {
@@ -10,7 +10,6 @@
   padding: 20px;
   border-radius: 10px;
   margin: 20px 0 20px 0;
-
 
   h1 {
     text-align: center;
@@ -22,8 +21,6 @@
   form {
     width: 100%;
     color: #18022a;
-
-    
 
     div {
       width: 100%;
@@ -44,7 +41,7 @@
         opacity: 1;
         transition: opacity 0.3s ease;
       }
-  
+
       input:focus::placeholder {
         opacity: 0;
       }
@@ -83,7 +80,7 @@
             .inputNumero {
               width: 50%;
               -moz-appearance: textfield; /* Remove setinhas no Firefox */
-  
+
               &::-webkit-inner-spin-button,
               &::-webkit-outer-spin-button {
                 -webkit-appearance: none;
@@ -98,22 +95,42 @@
           width: 87%;
           margin: 0;
 
+          .divBairro {
+            width: 30%;
+          }
+
           .divEstado {
-            width: 60%;
+            width: 70%;
             margin-left: 20px;
 
-            input {
+            select {
+              margin-left: 10px;
               width: 50%;
+              height: 40px;
+              border-radius: 10px;
+              padding-left: 18px;
+            }
+
+            .placeholder {
+              color: #888; // tom de cinza claro
             }
           }
 
           .divCidade {
             margin-left: 20px;
+
+            select {
+              width: 75%;
+              margin-left: 10px;
+              height: 40px;
+              border-radius: 10px;
+              padding-left: 18px;
+            }
           }
         }
       }
     }
-    
+
     button {
       padding: 10px 20px;
       background-color: #23023c;
@@ -131,10 +148,10 @@
     }
 
     .cadastroDivButtom {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
@@ -145,7 +162,7 @@
     width: 100%;
 
     label {
-      font-size: .8em;
+      font-size: 0.8em;
     }
 
     .divConfirmaSenha {
@@ -186,7 +203,7 @@
 
             input {
               padding-left: 2px;
-              padding-right: 2px; 
+              padding-right: 2px;
               text-align: center;
               margin: 0;
             }
@@ -216,7 +233,6 @@
           }
 
           .divCidade {
-
             input {
               padding-left: 2px;
               padding-right: 2px;
@@ -239,8 +255,6 @@
           }
         }
       }
-
     }
-    
   }
 }

@@ -214,6 +214,7 @@ const cidadesPorEstado = {
     "Camaragibe",
     "Garanhuns",
     "Vitória de Santo Antão",
+    "Igarassu",
   ],
   PI: [
     "Teresina",

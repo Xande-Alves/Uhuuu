@@ -188,6 +188,7 @@ export default function Header({ loggedUser, setLoggedUser }) {
       value: "Vitória de Santo Antão - PE",
       label: "Vitória de Santo Antão - PE",
     },
+    { value: "Igarassu - PE", label: "Igarassu - PE" },
     { value: "Teresina - PI", label: "Teresina - PI" },
     { value: "Parnaíba - PI", label: "Parnaíba - PI" },
     { value: "Picos - PI", label: "Picos - PI" },

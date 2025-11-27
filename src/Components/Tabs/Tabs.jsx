@@ -57,7 +57,7 @@ export default function Tabs({ cidadeSelecionada, loggedUser }) {
   // Função para incrementar/decrementar contadores
   const handleCounter = async (id) => {
     // 1️⃣ Verifica login
-    if (!loggedUser.loggedUser) {
+    if (!loggedUser) {
       alert("Você precisa estar logado para confirmar presença!");
       return;
     }
